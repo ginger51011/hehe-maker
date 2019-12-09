@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from pdfrw import PdfReader, PdfWriter, PageMerge
 import os
 import argparse
