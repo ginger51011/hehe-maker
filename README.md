@@ -13,10 +13,10 @@ Högerklick: Klistrar in det du kopierat i kommandotolken. Effektivt!
 That's it!
 
 ## Python
-Python är ett bra programmeringsspråk som är relativt lätt att köra lokalt på din dator. Installera via https://www.python.org/downloads/ och följ anvisningarna. Glöm inte kontrollera att allt funkar genom att skriva `python -v` i kommandotolken!
+Python är ett bra programmeringsspråk som är relativt lätt att köra lokalt på din dator. Installera via https://www.python.org/downloads/ och följ anvisningarna. Glöm inte kontrollera att allt funkar genom att skriva `python -v` i kommandotolken! För att installera de programm som behövs, kör `pip install pdfrw`.
 
 ## Så kör du programmet
-Följ installationsguiden ovan. När du gjort det, ladda ner detta projektet. Öppna kommandotolken och navigera till `hehe-maker` och skriv in `python hehemaker.py "<input>" "<output>"` där du ersätter `<input>` med sökvägen till mappen där du sparat dina sidor och `<output>` med sökvägen till den plats du vill spara dina tidningar. Tryck `Enter` och klart!
+Följ installationsguiden ovan. När du gjort det, ladda ner detta projektet. Öppna kommandotolken och navigera till `?hehe-maker?`-mappen och skriv in `python hehemaker.py "<input>" "<output>"` där du ersätter `<input>` med sökvägen till mappen där du sparat dina sidor och `<output>` med sökvägen till den plats du vill spara dina tidningar. Tryck `Enter` och klart!
 
 ## Varför
 Att sitta och göra denna tidningen i PowerPoint som Redaktionen '19 är inte optimalt.
