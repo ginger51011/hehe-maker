@@ -15,3 +15,5 @@ Att sitta och göra denna tidningen i PowerPoint som Redaktionen '19 är inte op
 
 ## TODO
 Fixa enklare installation, öka mångsidigheten till att klara av NollEguiden med, förslagsvis med fler flags.
+
+Rimligen kan scriptet även anpassas för att köras på en hemsida, vilket är ett framtida projekt.
