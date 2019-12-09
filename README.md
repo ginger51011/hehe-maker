@@ -8,6 +8,7 @@ Du vet den där svarta rutan eliiite haxxors använder i filmer? Aa men den. Kan
 Följande kommandon behöver du för att använda HeHE-maker:
 
 `cd`: Change Directory, så du navigerar dig mellan filer
+
 Högerklick: Klistrar in det du kopierat i kommandotolken. Effektivt!
 
 That's it!
