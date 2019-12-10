@@ -13,7 +13,7 @@ args = parser.parse_args() # Samlar våra argument i args
 
 # Beräknar antalet sidor vi har att göra med; Är det ett tal som ej är delbart med 4 kastat exception
 page_listings = os.listdir(args.input) # Ger en lista med innehållet i pages
-if args.force:
+if not args.force:
     nbr_of_pages = len(page_listings)
     if (nbr_of_pages % 4 != 0): # Om vi ej har mod 4 == 0 kan vi ej trycka på uppslag
         raise ValueError("Antalet sidor ger ej mod 4 == 0; Då kan man ej trycka på uppslag.")
