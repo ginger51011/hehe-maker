@@ -6,14 +6,16 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("input", help="Path to pages") # Lägger till parameter till parsern
 parser.add_argument("output", help="Path to where you want the papers saved")
+parser.add_argument("-f", "--force", action="store_true", help="Suppresses the need for the number of pages to be = 0 (mod 4)") # Om flaggan ges sparas värdet true
 args = parser.parse_args() # Samlar våra argument i args
 
 
 # Beräknar antalet sidor vi har att göra med; Är det ett tal som ej är delbart med 4 kastat exception
 page_listings = os.listdir(args.input) # Ger en lista med innehållet i pages
-nbr_of_pages = len(page_listings)
-if (nbr_of_pages % 4 != 0): # Om vi ej har mod 4 == 0 kan vi ej trycka på uppslag
-    raise ValueError("Antalet sidor ger ej mod 4 == 0; Då kan man ej trycka på uppslag.")
+if args.force:
+    nbr_of_pages = len(page_listings)
+    if (nbr_of_pages % 4 != 0): # Om vi ej har mod 4 == 0 kan vi ej trycka på uppslag
+        raise ValueError("Antalet sidor ger ej mod 4 == 0; Då kan man ej trycka på uppslag.")
 
 # Får ut PdfReader:s för alla sidor
 pdf_readers = []
@@ -34,6 +36,10 @@ def create_print_version(pages_in):
         pages_out.append(fixpage(pages_in.pop(), pages_in.pop(0)))
         pages_out.append(fixpage(pages_in.pop(0), pages_in.pop()))
 
+    # Om vi ska ignorera att det ska gå jämnt ut lägger vi till den sista
+    if args.force:
+        pages_out += pages_in
+    
     PdfWriter(args.output + "\\" + "print.pdf").addpages(pages_out).write()
 
 def create_web_version(pages_in):
@@ -43,7 +49,7 @@ def create_web_version(pages_in):
     # Vi sätter elementen en efter den andra
     while len(pages_in) > 0:
         pages_out.append(pages_in.pop(0))
-
+        
     PdfWriter(args.output + "\\" + "web.pdf").addpages(pages_out).write()
 
 # Följande hjälpmetod är från pdfrw. Sätter ihop två sidor till en
