@@ -18,7 +18,9 @@ Python är ett bra programmeringsspråk som är relativt lätt att köra lokalt 
 ## Så kör du programmet
 Följ installationsguiden ovan. När du gjort det, ladda ner detta projektet. Öppna kommandotolken och navigera till `/hehe-maker/`-mappen och skriv in `python hehemaker.py "<input>" "<output>"` där du ersätter `<input>` med sökvägen till mappen där du sparat dina sidor och `<output>` med sökvägen till den plats du vill spara dina tidningar. Tryck `Enter` och klart!
 
-Man kan förtrycka kravet på att man ska kunna trycka allt på ett jämnt antal uppslag genom att lägga till flaggan `-f` eller `--force` efter `output`.
+Man kan förtrycka kravet på att man ska kunna trycka allt på ett jämnt antal uppslag genom att lägga till flaggan `-f` eller `--force` före `input`.
+
+Skulle du istället vilja konvertera från en printversion till en webbversion, använd `-s` eller `--split` före `input` (det är ej nödvändigt att använda `-f` samtidigt).
 
 ## Varför
 Att sitta och göra denna tidningen i PowerPoint som Redaktionen '19 är inte optimalt.
