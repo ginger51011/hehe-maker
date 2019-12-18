@@ -9,17 +9,19 @@ parser.add_argument("input", help="Path to pages")  # Adds parameter to parser
 parser.add_argument("output", help="Path to where you want the papers saved")
 parser.add_argument("-f", "--force", action="store_true", help="Suppresses the need for the number of pages to be = 0 (mod 4)")     # If flag is used saves a true value
 parser.add_argument("-s", "--split", action="store_true", help="Will split pages in two, ordering as if this was a print file")     # Flag for splitting a print version
+parser.add_argument("-wtp", "--web-to-print", action="store_true", help="Will create a printable version of a web PDF")     # Seems to convert - to _ for variable name
 args = parser.parse_args()      # Collects our input in args
 
 # Throws an exception if we don't force mod 4 != 0
 page_listings = os.listdir(args.input)      # Returns a list with the files in the directory
-if not (args.force or args.split):
+if not (args.force or args.split or args.web_to_print):
     nbr_of_pages = len(page_listings)
     if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
         raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version")
 
 pages_in = []
-if not args.split:
+# We will need more than one reader if we are putting different files together
+if not (args.split or args.web_to_print):
     pdf_readers = []
 
     # Puts out a PdfReader for each PDF document (page)
@@ -107,6 +109,8 @@ def splitpage(page):
 # Runs our program
 if args.split:
     print_to_web(pages_in)
+elif args.web_to_print:
+    create_print_version(pages_in)
 else:
     create_print_version(pages_in)
     create_web_version(pages_in)
