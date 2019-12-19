@@ -133,7 +133,7 @@ def insert_pages(pages_in, pages_to_be_inserted, index):
         pages_out.insert(true_index, pages_to_be_inserted.pop(0))
     PdfWriter(args.output + "\\inserted.pdf").addpages(pages_out).write()
 
-pages_in = create_page_list(args.input)     # Creates list of all pages inserted
+pages_in = create_page_list(args.input)     # Creates list of all pages that we take as input
     
 # Runs our program
 if args.split:
@@ -148,4 +148,6 @@ elif args.insert:
 else:
     create_print_version(pages_in)
     create_web_version(pages_in)
+
+print("PDF created successfully! Grattis!")
     
