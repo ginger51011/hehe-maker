@@ -9,7 +9,7 @@ parser.add_argument("-f", "--force", action="store_true", help="Suppresses the n
 parser.add_argument("-s", "--split", action="store_true", help="Will split pages in two, ordering as if this was a print file")     # Flag for splitting a print version
 parser.add_argument("-wtp", "--web-to-print", action="store_true", help="Will create a printable version of a web PDF")     # Seems to convert - to _ for variable name
 parser.add_argument("-ins", "--insert", help="Inserts the pages given at the target page, pushes the page of that number forward")      # Flag to insert page
-parser.add_argument("ins_index", nargs="?", metavar="I", type=int, help="Page number at which pages should be inserted")     # Where to insert pages
+parser.add_argument("-i", "--index", help="Page number at which pages should be inserted")     # Where to insert pages
 parser.add_argument("-rm", "--remove", action="store_const", const=int, default=[], help="Removes the pages given from the PDF specified")      # Flag to remove pages
 parser.add_argument("rm_pages", nargs="*", metavar="R", type=int, help="A page to be removed")      # Pages to be removed as specified by user, nargs="*" used to set as optional and a list
 parser.add_argument("input", help="Path to pages")      # Adds parameter to parser
@@ -22,6 +22,10 @@ if not (args.force or args.split or args.web_to_print or args.remove or args.inp
     nbr_of_pages = len(page_listings)
     if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
         raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version")
+
+# Throws exception if we want to insert a page but have not specified an index
+if (args.insert and not args.index) or (not args.insert and args.index):
+    raise EnvironmentError("You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -i")
 
 # Help method to create a list of pages in the directory with path path. 
 # Goes through each PDF file in directory and adds every page to the list.
