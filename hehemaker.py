@@ -7,7 +7,6 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--force", action="store_true", help="Suppresses the need for the number of pages to be = 0 (mod 4)")     # If flag is used saves a true value
 parser.add_argument("-s", "--split", action="store_true", help="Will split pages in two, ordering as if this was a print file")     # Flag for splitting a print version
-parser.add_argument("-wtp", "--web-to-print", action="store_true", help="Will create a printable version of a web PDF")     # Seems to convert - to _ for variable name
 parser.add_argument("-ins", "--insert", help="Inserts the pages given at the target page, pushes the page of that number forward")      # Flag to insert page
 parser.add_argument("-i", "--index", help="Page number at which pages should be inserted")     # Where to insert pages
 parser.add_argument("-rm", "--remove", action="store_const", const=int, default=[], help="Removes the pages given from the PDF specified")      # Flag to remove pages
@@ -18,7 +17,7 @@ args = parser.parse_args()      # Collects our input in args
 
 # Throws an exception if we don't force mod 4 != 0
 page_listings = os.listdir(args.input)      # Returns a list with the files in the directory
-if not (args.force or args.split or args.web_to_print or args.remove or args.input):
+if not (args.force or args.split or args.remove or args.input):
     nbr_of_pages = len(page_listings)
     if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
         raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version")
@@ -142,8 +141,6 @@ pages_in = create_page_list(args.input)     # Creates list of all pages that we 
 # Runs our program
 if args.split:
     print_to_web(pages_in)
-elif args.web_to_print:
-    create_print_version(pages_in)
 elif args.remove:
     remove_pages(pages_in, args.rm_pages)
 elif args.insert:
