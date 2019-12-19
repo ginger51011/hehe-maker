@@ -23,14 +23,8 @@ if not (args.force or args.split or args.web_to_print or args.remove or args.inp
     if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
         raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version")
 
-pages_in = create_page_list(args.input)     # Creates list of all pages inserted
-
-# If we are inserting pages we need readers for that
-pages_to_be_inserted = []
-if args.insert:
-    pages_to_be_inserted = create_page_list(args.insert)
-
-# Help method to create a list of pages in the directory with path path. Goes through each PDF file in directory and adds every page to the list.
+# Help method to create a list of pages in the directory with path path. 
+# Goes through each PDF file in directory and adds every page to the list.
 def create_page_list(path):
     pages = []
     page_listings = os.listdir(path)
@@ -40,7 +34,7 @@ def create_page_list(path):
     for listing in page_listings:
         pdf_readers.append(PdfReader(path + "\\" + listing))
 
-    # Creates a reader for every file and saves it to a list
+    # Goes through the document for each reader and adds all pages for that reader
     for reader in pdf_readers:
         n = 0
         while True:
@@ -134,12 +128,13 @@ def insert_pages(pages_in, pages_to_be_inserted, index):
     true_index = index - 1      # Users uses page numbering, we use array index
     pages_out = pages_in.copy()
     pages_to_be_inserted.reverse()      # We are going to insert them in reverse order
-    print(str(len(pages_to_be_inserted)))
 
     while len(pages_to_be_inserted) > 0:
         pages_out.insert(true_index, pages_to_be_inserted.pop(0))
     PdfWriter(args.output + "\\inserted.pdf").addpages(pages_out).write()
 
+pages_in = create_page_list(args.input)     # Creates list of all pages inserted
+    
 # Runs our program
 if args.split:
     print_to_web(pages_in)
@@ -147,7 +142,8 @@ elif args.web_to_print:
     create_print_version(pages_in)
 elif args.remove:
     remove_pages(pages_in, args.rm_pages)
-elif args.insert is not None:
+elif args.insert:
+    pages_to_be_inserted = create_page_list(args.insert)
     insert_pages(pages_in, pages_to_be_inserted, args.ins_index)
 else:
     create_print_version(pages_in)
