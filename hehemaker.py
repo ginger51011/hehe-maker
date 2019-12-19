@@ -23,43 +23,34 @@ if not (args.force or args.split or args.web_to_print or args.remove or args.inp
     if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
         raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version")
 
-pages_in = []
-# We will need more than one reader if we are putting different files together
-if not (args.split or args.web_to_print or args.remove or args.input):      # We are not doing anything special
-    pdf_readers = []
-
-    # Puts out a PdfReader for each PDF document (page)
-    for listing in page_listings:
-        pdf_readers.append(PdfReader(args.input + "\\" + listing))      # args.input är här alltså C:\<blablabla>\sidorna eller motsvarande
-
-    # Adds all pages to the pages_in list
-    for reader in pdf_readers:
-        pages_in.append(reader.getPage(0))
-
-# Otherwise we only need one reader
-else:
-    pages_in = PdfReader(args.input + "\\" + page_listings[0]).pages
+pages_in = create_page_list(args.input)     # Creates list of all pages inserted
 
 # If we are inserting pages we need readers for that
 pages_to_be_inserted = []
 if args.insert:
-    page_listings = os.listdir(args.insert)
+    pages_to_be_inserted = create_page_list(args.insert)
+
+# Help method to create a list of pages in the directory with path path. Goes through each PDF file in directory and adds every page to the list.
+def create_page_list(path):
+    pages = []
+    page_listings = os.listdir(path)
     pdf_readers = []
 
     # Puts out a PdfReader for each PDF document
     for listing in page_listings:
-        pdf_readers.append(PdfReader(args.insert + "\\" + listing))
+        pdf_readers.append(PdfReader(path + "\\" + listing))
 
     # Creates a reader for every file and saves it to a list
     for reader in pdf_readers:
         n = 0
         while True:
-            pages_to_be_inserted.append(reader.getPage(n))
+            pages.append(reader.getPage(n))
             try:
                 reader.getPage(n + 1)   # Real shit programming to check if there is a next page
                 n = n + 1
             except:
                 break
+    return pages
 
 def create_print_version(pages_in):
     """Puts together the pages in pages_in to a signle PDF in
