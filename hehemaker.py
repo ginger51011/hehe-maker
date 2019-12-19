@@ -8,35 +8,58 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--force", action="store_true", help="Suppresses the need for the number of pages to be = 0 (mod 4)")     # If flag is used saves a true value
 parser.add_argument("-s", "--split", action="store_true", help="Will split pages in two, ordering as if this was a print file")     # Flag for splitting a print version
 parser.add_argument("-wtp", "--web-to-print", action="store_true", help="Will create a printable version of a web PDF")     # Seems to convert - to _ for variable name
-parser.add_argument("-rm", "--remove", action="store_const", const=int, default=[], help="Removes the pages given from the PDF specified")      # Flag to remove numbers
-parser.add_argument("rm_pages", nargs="*", metavar="P", type=int, help="A page to be removed")      # Pages to be removed as specified by user, nargs="*" used to set as optional and a list
-parser.add_argument("input", help="Path to pages")  # Adds parameter to parser
+parser.add_argument("-ins", "--insert", help="Inserts the pages given at the target page, pushes the page of that number forward")      # Flag to insert page
+parser.add_argument("ins_index", nargs="?", metavar="I", type=int, help="Page number at which pages should be inserted")     # Where to insert pages
+parser.add_argument("-rm", "--remove", action="store_const", const=int, default=[], help="Removes the pages given from the PDF specified")      # Flag to remove pages
+parser.add_argument("rm_pages", nargs="*", metavar="R", type=int, help="A page to be removed")      # Pages to be removed as specified by user, nargs="*" used to set as optional and a list
+parser.add_argument("input", help="Path to pages")      # Adds parameter to parser
 parser.add_argument("output", help="Path to where you want the papers saved")
 args = parser.parse_args()      # Collects our input in args
 
 # Throws an exception if we don't force mod 4 != 0
 page_listings = os.listdir(args.input)      # Returns a list with the files in the directory
-if not (args.force or args.split or args.web_to_print or args.remove):
+if not (args.force or args.split or args.web_to_print or args.remove or args.input):
     nbr_of_pages = len(page_listings)
     if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
         raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version")
 
 pages_in = []
 # We will need more than one reader if we are putting different files together
-if not (args.split or args.web_to_print or args.remove):
+if not (args.split or args.web_to_print or args.remove or args.input):      # We are not doing anything special
     pdf_readers = []
 
     # Puts out a PdfReader for each PDF document (page)
     for listing in page_listings:
         pdf_readers.append(PdfReader(args.input + "\\" + listing))      # args.input är här alltså C:\<blablabla>\sidorna eller motsvarande
 
-    # Creates a reader for every page and saves it to a list
+    # Adds all pages to the pages_in list
     for reader in pdf_readers:
         pages_in.append(reader.getPage(0))
 
 # Otherwise we only need one reader
 else:
     pages_in = PdfReader(args.input + "\\" + page_listings[0]).pages
+
+# If we are inserting pages we need readers for that
+pages_to_be_inserted = []
+if args.insert:
+    page_listings = os.listdir(args.insert)
+    pdf_readers = []
+
+    # Puts out a PdfReader for each PDF document
+    for listing in page_listings:
+        pdf_readers.append(PdfReader(args.insert + "\\" + listing))
+
+    # Creates a reader for every file and saves it to a list
+    for reader in pdf_readers:
+        n = 0
+        while True:
+            pages_to_be_inserted.append(reader.getPage(n))
+            try:
+                reader.getPage(n + 1)   # Real shit programming to check if there is a next page
+                n = n + 1
+            except:
+                break
 
 def create_print_version(pages_in):
     """Puts together the pages in pages_in to a signle PDF in
@@ -115,6 +138,17 @@ def remove_pages(pages_in, page_numbers):
         del pages_out[n - 1]     # Our list index start at 0, but the user starts counting pages at 1
     PdfWriter(args.output + "\\removed.pdf").addpages(pages_out).write()
 
+# Inserts pages at specified index
+def insert_pages(pages_in, pages_to_be_inserted, index):
+    true_index = index - 1      # Users uses page numbering, we use array index
+    pages_out = pages_in.copy()
+    pages_to_be_inserted.reverse()      # We are going to insert them in reverse order
+    print(str(len(pages_to_be_inserted)))
+
+    while len(pages_to_be_inserted) > 0:
+        pages_out.insert(true_index, pages_to_be_inserted.pop(0))
+    PdfWriter(args.output + "\\inserted.pdf").addpages(pages_out).write()
+
 # Runs our program
 if args.split:
     print_to_web(pages_in)
@@ -122,6 +156,8 @@ elif args.web_to_print:
     create_print_version(pages_in)
 elif args.remove:
     remove_pages(pages_in, args.rm_pages)
+elif args.insert is not None:
+    insert_pages(pages_in, pages_to_be_inserted, args.ins_index)
 else:
     create_print_version(pages_in)
     create_web_version(pages_in)
