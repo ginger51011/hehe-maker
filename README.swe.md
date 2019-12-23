@@ -15,6 +15,8 @@ That's it!
 ## Python
 Python är ett bra programmeringsspråk som är relativt lätt att köra lokalt på din dator. Installera via https://www.python.org/downloads/ och följ anvisningarna. Glöm inte kontrollera att allt funkar genom att skriva `python -v` i kommandotolken!
 
+OBS: Om du inte låter python skapa en miljövariabel (PATH-variable) vid installation kan du komma att behöva fixa runt lite för att köra scriptet.
+
 ## Krav
 Kräver paketet `pdfrw` för att fungera. Installera genom att köra `pip install pdfrw`.
 
