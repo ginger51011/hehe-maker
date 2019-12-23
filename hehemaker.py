@@ -13,11 +13,6 @@ parser.add_argument("-rm", "--remove", action="store_const", const=int, default=
 parser.add_argument("rm_pages", nargs="*", metavar="R", type=int, help="A page to be removed")      # Pages to be removed as specified by user, nargs="*" used to set as optional and a list
 parser.add_argument("input", help="Path to pages")      # Adds parameter to parser
 parser.add_argument("output", help="Path to where you want the papers saved")
-args = parser.parse_args()      # Collects our input in args
-
-# Throws exception if we want to insert a page but have not specified an index
-if (args.insert and not args.index) or (not args.insert and args.index):
-    raise EnvironmentError("You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -i")
 
 # Defining functions
 
@@ -149,19 +144,26 @@ def insert_pages(pages_in, pages_to_be_inserted, index):
 
 # End of defining functions
 
-pages_in = create_page_list(args.input)     # Creates list of all pages that we take as input
-pagecount_is_legal(pages_in)    # Checks to see if we have a legal number of pages, or force past it
+if __name__ == "__main__":      # If this code is run on its' own and is not imported, run the following
+    args = parser.parse_args()      # Collects our input in args
 
-if args.split:
-    print_to_web(pages_in)
-elif args.remove:
-    remove_pages(pages_in, args.rm_pages)
-elif args.insert:
-    pages_to_be_inserted = create_page_list(args.insert)
-    insert_pages(pages_in, pages_to_be_inserted, args.ins_index)
-else:
-    create_print_version(pages_in)
-    create_web_version(pages_in)
+    # Throws exception if we want to insert a page but have not specified an index
+    if (args.insert and not args.index) or (not args.insert and args.index):
+        raise EnvironmentError("You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -i")
 
-print("PDF created successfully! Grattis!")
+    pages_in = create_page_list(args.input)     # Creates list of all pages that we take as input
+    pagecount_is_legal(pages_in)    # Checks to see if we have a legal number of pages, or force past it
+
+    if args.split:
+        print_to_web(pages_in)
+    elif args.remove:
+        remove_pages(pages_in, args.rm_pages)
+    elif args.insert:
+        pages_to_be_inserted = create_page_list(args.insert)
+        insert_pages(pages_in, pages_to_be_inserted, args.ins_index)
+    else:
+        create_print_version(pages_in)
+        create_web_version(pages_in)
+
+    print("PDF created successfully! Grattis!")
     
