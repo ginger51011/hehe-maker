@@ -12,7 +12,7 @@ setup(
     description='Ett enkelt kommandoverktyg för att sätta ihop PDF:er till HeHE',
     long_descrtiption=long_descrtiption,
     long_description_content_type="text/markdown",
-    scripts=["hehemaker"],  # Lets us run via pipx
+    scripts=["hehe-maker.py"],  # Lets us run via pipx
     url="https://github.com/ginger51011/hehe-maker",
     packages=find_packages(),
 )

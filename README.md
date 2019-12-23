@@ -17,7 +17,7 @@ Requires Python 3.x and the `pdfrw` package to run. Simply install Python from [
 To install `pdfrw`, run `pip install pdfrw`.
 
 ## Running the program
-After installing the requirements above, and cloning this repo, open the terminal and navigate to the folder with `hehemaker.py`. Simply use `hehemaker.py "<path to input>" "<path to output>"` and the script will create print.pdf and web.pdf at the specified path.
+After installing the requirements above, and cloning this repo, open the terminal and navigate to the folder with `hehe-maker.py`. Simply use `hehemaker.py "<path to input>" "<path to output>"` and the script will create print.pdf and web.pdf at the specified path.
 
 Note: You might have the write `python` before `hehemaker.py` on some systems.
 
