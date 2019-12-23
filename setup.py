@@ -15,4 +15,9 @@ setup(
     scripts=["hehe-maker.py"],  # Lets us run via pipx
     url="https://github.com/ginger51011/hehe-maker",
     packages=find_packages(),
+    entry_points={
+        "console_scripts": [
+            "hehe-maker = hehe-maker.__main__"
+        ]
+    }
 )
