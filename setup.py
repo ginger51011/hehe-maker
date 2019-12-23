@@ -9,7 +9,7 @@ setup(
     version='1.1.3',
     author='Emil Jonathan Eriksson',
     author_email='eje1999@gmail.com',
-    description='Ett enkelt kommandoverktyg för att sätta ihop PDF:er till HeHE',
+    description='Ett enkelt kommandoverktyg för att sätta ihop PDF:er till HeHE | A simple command line tool to modify papers in PDF format',
     long_description=long_descritiption,
     long_description_content_type="text/markdown",
     url="https://github.com/ginger51011/hehe-maker",
