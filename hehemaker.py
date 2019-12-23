@@ -15,8 +15,11 @@ parser.add_argument("input", help="Path to pages")      # Adds parameter to pars
 parser.add_argument("output", help="Path to where you want the papers saved")
 args = parser.parse_args()      # Collects our input in args
 
-# Throws an exception if we don't force mod 4 != 0
 page_listings = os.listdir(args.input)      # Returns a list with the files in the directory
+
+# Checking for errors with input
+
+# Throws an exception if we don't force mod 4 != 0
 if not (args.force or args.split or args.remove or args.input):
     nbr_of_pages = len(page_listings)
     if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
@@ -25,6 +28,8 @@ if not (args.force or args.split or args.remove or args.input):
 # Throws exception if we want to insert a page but have not specified an index
 if (args.insert and not args.index) or (not args.insert and args.index):
     raise EnvironmentError("You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -i")
+
+# End of errorchecking
 
 # Help method to create a list of pages in the directory with path path. 
 # Goes through each PDF file in directory and adds every page to the list.
