@@ -127,7 +127,6 @@ def splitpage(page):
         # We return (yield) a generator, which in turn generates a collection later
         yield PageMerge().add(page, viewrect=(x, 0, 0.5, 1)).render()
 
-# Removes pages specified
 def remove_pages(pages_in, page_numbers):
     """ Removes the pages with page_numbers from pages_in
     and creates PDF with result
@@ -137,7 +136,6 @@ def remove_pages(pages_in, page_numbers):
         del pages_out[n - 1]     # Our list index start at 0, but the user starts counting pages at 1
     PdfWriter(args.output + "\\removed.pdf").addpages(pages_out).write()
 
-# 
 def insert_pages(pages_in, pages_to_be_inserted, index):
     """ Inserts pages at specified index
     """
