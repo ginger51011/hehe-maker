@@ -23,18 +23,18 @@ OBS: Om du inte låter python skapa en miljövariabel (PATH-variable) vid instal
 Kräver paketet `pdfrw` för att fungera. Installera genom att köra `pip install pdfrw`.
 
 ## Så kör du programmet
-Följ installationsguiden ovan. När du gjort det, ladda ner detta projektet. Öppna kommandotolken och navigera till `/hehe-maker/`-mappen (om du inte vill lägga till en PATH-variabel) och skriv in `hehemaker.py "<input>" "<output>"` där du ersätter `<input>` med sökvägen till mappen där du sparat dina sidor och `<output>` med sökvägen till den plats du vill spara dina tidningar. Tryck `Enter` och klart!
+Följ installationsguiden ovan. När du gjort det, ladda ner detta projektet. Öppna kommandotolken och navigera till `/hehe-maker/`-mappen (om du inte vill lägga till en PATH-variabel) och skriv in `hehe-maker.py "<input>" "<output>"` där du ersätter `<input>` med sökvägen till mappen där du sparat dina sidor och `<output>` med sökvägen till den plats du vill spara dina tidningar. Tryck `Enter` och klart!
 
 Har du en webbversion som du vill göra om till en printversion är det bara att köra programmet precis som du hade gjort om du haft en mapp full med olika sidor.
 
 ### Flaggor
-Flaggor kan användas för att ändra vad HeHE-maker gör. Nedan följer en lista. Bara skriv in efter `hehemaker.py`! Blanda dessa flaggor på egen risk.
+Flaggor kan användas för att ändra vad HeHE-maker gör. Nedan följer en lista. Bara skriv in efter `hehe-maker.py`! Blanda dessa flaggor på egen risk.
 
 * Är denna listan inte hjälpsam nog? Skriv `-h` eller `--help`!
 * Man kan förtrycka kravet på att man ska kunna trycka allt på ett jämnt antal uppslag genom att lägga till flaggan `-f` eller `--force` före `input`.
 * Skulle du istället vilja konvertera från en printversion till en webbversion, använd `-s` eller `--split` före `input` (det är ej nödvändigt att använda `-f` samtidigt).
-* Vill du ta bort en eller flera sidor kan du använda `-rm` eller `--remove`, följt av sidnummret eller sidnummerna. Exempel: Du vill ta bort första och sista sidan. Då skriver du helt enkelt in `hehemaker.py -rm 1 12 "<sökväg till input>" "<sökväg till output>"`!
-* Om du vill sätta in filer i en existerande PDF kan du använda `-ins` eller `--insert` följt av sökvägen till mappen där allt du vill sätta in ligger, samt på vilket index detta ska sättas in med hjälp av flaggan `-i` (eller `--index`). Exempelvis kan man göra så här för att lägga in två sidor som ligger i mappen på sökvägen `\xxx\` på andrasidan: `hehemaker.py -ins "\xxx\" -i 2 "<sökväg till input>" "<sökväg till output>"`.
+* Vill du ta bort en eller flera sidor kan du använda `-rm` eller `--remove`, följt av sidnummret eller sidnummerna. Exempel: Du vill ta bort första och sista sidan. Då skriver du helt enkelt in `hehe-maker.py -rm 1 12 "<sökväg till input>" "<sökväg till output>"`!
+* Om du vill sätta in filer i en existerande PDF kan du använda `-ins` eller `--insert` följt av sökvägen till mappen där allt du vill sätta in ligger, samt på vilket index detta ska sättas in med hjälp av flaggan `-i` (eller `--index`). Exempelvis kan man göra så här för att lägga in två sidor som ligger i mappen på sökvägen `\xxx\` på andrasidan: `hehe-maker.py -ins "\xxx\" -i 2 "<sökväg till input>" "<sökväg till output>"`.
 
 ## Varför
 Att sitta och göra denna tidningen i PowerPoint som Redaktionen '19 är inte optimalt.
