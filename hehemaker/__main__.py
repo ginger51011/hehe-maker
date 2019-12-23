@@ -14,6 +14,8 @@ parser.add_argument("rm_pages", nargs="*", metavar="R", type=int, help="A page t
 parser.add_argument("input", help="Path to pages")      # Adds parameter to parser
 parser.add_argument("output", help="Path to where you want the papers saved")
 
+args = parser.parse_args()      # Collects our input in args
+
 # Defining functions
 
 def pagecount_is_legal(pages_in):
@@ -144,9 +146,9 @@ def insert_pages(pages_in, pages_to_be_inserted, index):
 
 # End of defining functions
 
-if __name__ == "__main__":      # If this code is run on its' own and is not imported, run the following
-    args = parser.parse_args()      # Collects our input in args
 
+# The code below is used to make sure installing via pip works
+def main():
     # Throws exception if we want to insert a page but have not specified an index
     if (args.insert and not args.index) or (not args.insert and args.index):
         raise EnvironmentError("You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -i")
@@ -166,4 +168,6 @@ if __name__ == "__main__":      # If this code is run on its' own and is not imp
         create_web_version(pages_in)
 
     print("PDF created successfully! Grattis!")
-    
+
+if __name__ == "__main__":      # If this code is run on its' own and is not imported, run the following (main())
+    main()

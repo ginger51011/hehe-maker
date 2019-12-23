@@ -1,14 +1,22 @@
 # Denna fil är endast till för att det ska gå att installera hehemaker.py.
 from setuptools import setup, find_packages
 
+with open("README.md", "r") as fh:
+    long_descritiption = fh.read()
+
 setup(
     name='hehe-maker',
-    version='1.0.1a',
-    description='Ett enkelt kommandoverktyg för att sätta ihop PDF:er till HeHE',
+    version='1.1.3',
     author='Emil Jonathan Eriksson',
     author_email='eje1999@gmail.com',
+    description='Ett enkelt kommandoverktyg för att sätta ihop PDF:er till HeHE | A simple command line tool to modify papers in PDF format',
+    long_description=long_descritiption,
+    long_description_content_type="text/markdown",
+    url="https://github.com/ginger51011/hehe-maker",
     packages=find_packages(),
-    project_urls={
-        'Source': 'https://github.com/ginger51011/hehe-maker'
-    },
+    entry_points={  # Tells pipx what to do
+        "console_scripts": [
+            "hehemaker=hehemaker.__main__:main"   # Must be underscore
+        ]
+    }
 )
