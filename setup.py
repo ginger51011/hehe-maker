@@ -2,22 +2,21 @@
 from setuptools import setup, find_packages
 
 with open("README.md", "r") as fh:
-    long_descrtiption = fh.read()
+    long_descritiption = fh.read()
 
 setup(
     name='hehe-maker',
-    version='1.1.2a',
+    version='1.1.3',
     author='Emil Jonathan Eriksson',
     author_email='eje1999@gmail.com',
     description='Ett enkelt kommandoverktyg för att sätta ihop PDF:er till HeHE',
-    long_descrtiption=long_descrtiption,
+    long_description=long_descritiption,
     long_description_content_type="text/markdown",
-    scripts=["hehe-maker.py"],  # Lets us run via pipx
     url="https://github.com/ginger51011/hehe-maker",
     packages=find_packages(),
-    entry_points={
+    entry_points={  # Tells pipx what to do
         "console_scripts": [
-            "hehe-maker = hehe-maker.__main__"
+            "hehemaker=hehemaker.__main__:main"   # Must be underscore
         ]
     }
 )
