@@ -4,7 +4,7 @@
 **HeHE-maker** is a simple command line-tool to create a paper to be published in printed and/or web form. Simply create the pages you want, order them in an otherwise empty directory/folder (simply naming them 01.pdf, 02.pdf, 03.pdf etc. is enough) and let the script create printable versions, as well as web versions, for you! If more than one page happens to be in the same PDF-file, for example if an article has two pages in the same file, HeHE-maker will take care of this for you.
 
 ## Quickstart
-This program is part if the Python Index (PyPi) and can easily be installed and run using `pip` and `pipx`. Start by installing Python 3.x from [here](https://www.python.org/downloads/), and run `python -v` in your console and make sure everything looks reasonable. Then run the following commands:
+This program is part if the Python Index (PyPi) and can easily be installed and run using `pip`. Start by installing Python 3.x from [here](https://www.python.org/downloads/), and run `python -v` in your console and make sure everything looks reasonable. Then run the following commands:
 
 * `pip install hehe-maker`
 
@@ -13,7 +13,7 @@ Done! You can now use HeHE-maker by typing `hehemaker` followed by arguments (ac
 ## Running the program
 Simply use `hehemaker "<path to input>" "<path to output>"` and the script will create print.pdf and web.pdf at the specified path.
 
-Note: You might have the write `python` before `hehemaker` on some systems.
+If you are on Windows and this fails, check to see if Python and Python/Scripts are in your PATH-variables (Swe: *Miljövariabler*).
 
 ## Further functions and flags
 HeHE-maker can do much more to facilitate the publishing of a paper by using flags to set functions. These are written before the input and output paths. They are as follows:
