@@ -11,7 +11,7 @@ This program is part if the Python Index (PyPi) and can easily be installed and 
 Done! You can now use HeHE-maker by typing `hehemaker` followed by arguments (according to "Running the program" below)!
 
 ## Running the program
-Simply use `hehemaker "<path to input>" "<path to output>"` and the script will create print.pdf and web.pdf at the specified path.
+Simply use `hehemaker "<path to input>" "<path to output>"` and the script will create print.pdf and web.pdf at the specified path. The path can either be full, like `C:\\User\\...\\example` or relative, like `./` for the current folder/directory.
 
 Note: You might have the write `python` before `hehemaker` on some systems.
 
@@ -34,6 +34,8 @@ He deletes `old.pdf` and replaces it with `web.pdf`created in the `\new\`-direct
 He deletes `web.pdf` and replaces it with `removed.pdf`created in the `\new\`-directory. He then inserts his ad by running `hehemaker -ins "C:\\Users\\Timmy\\ad" -i 4 "C:\\Users\\Timmy\\old" "C:\\Users\\Timmy\\new"`. 
 
 He now wants the whole paper in a printable format on his desktop, so he finally runs `hehemaker "C:\\Users\\Timmy\\new" "C:\\Users\\Timmy\\Desktop"`.
+
+Of course, by changing directories he could easily have skipped having to write out the whole `C:\\User\\Timmy\\...` every time.
 
 ## Why
 Doing all this with large documents (12+ pages) becomes very tiresome.
