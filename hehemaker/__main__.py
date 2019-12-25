@@ -10,6 +10,7 @@ parser.add_argument("-s", "--split", action="store_true", help="Will split pages
 parser.add_argument("-ins", "--insert", help="Inserts the pages given at the target page, pushes the page of that number forward")      # Flag to insert page
 parser.add_argument("-x", "--index", help="Page number at which pages should be inserted")     # Where to insert pages
 parser.add_argument("-rm", "--remove", nargs="+", type=int, help="Removes the pages given from the PDF specified")      # Flag to remove pages
+parser.add_argument("-g", "--get", nargs="+", type=int, help="Outputs the pages given from the PDF specified")      # Flag to get pages
 parser.add_argument("-i", "--input", default="./", help="Path to pages, defaults to current directory")      # Our input and output is the current directory by default
 parser.add_argument("-o", "--output", default="./", help="Path to where you want the papers saved, defaults to current directory")
 
@@ -21,7 +22,7 @@ def pagecount_is_legal(pages_in):
     """Throws an exception if we don't force mod 4 != 0
     of the pages, or we use another flag that ignores this.
     """
-    if not (args.force or args.split or args.remove or args.input):
+    if not (args.force or args.split or args.remove or args.input or args.get):
         nbr_of_pages = len(pages_in)
         if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
             raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version. Use -f to force past this.")
@@ -147,6 +148,21 @@ def insert_pages(pages_in, pages_to_be_inserted, index):
         pages_out.insert(true_index, pages_to_be_inserted.pop(0))
     PdfWriter(args.output + "\\inserted.pdf").addpages(pages_out).write()
 
+def get_pages(pages_in, page_numbers):
+    """ Creates a separate PDF file for each
+    page as listed in page_numbers
+    """
+    for nbr in page_numbers:
+        nbr = nbr - 1       # pages_in starts indexing at 0, user at 1
+        if (nbr < 0) or (nbr > len(pages_in) - 1):
+            print(str(nbr + 1) + " is not a page, ignoring...")
+            continue
+        elif nbr + 1 < 10:      # We want a zero before page number
+            PdfWriter(args.output + "\\get_page_0" + str(nbr + 1) + ".pdf").addpage(pages_in[nbr]).write()
+        else:
+            PdfWriter(args.output + "\\get_page_" + str(nbr + 1) + ".pdf").addpage(pages_in[nbr]).write()
+
+
 # End of defining functions
 
 
@@ -166,6 +182,8 @@ def main():
     elif args.insert:
         pages_to_be_inserted = create_page_list(args.insert)
         insert_pages(pages_in, pages_to_be_inserted, args.ins_index)
+    elif args.get:
+        get_pages(pages_in, args.get)
     else:
         create_print_version(pages_in)
         create_web_version(pages_in)

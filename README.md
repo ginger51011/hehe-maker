@@ -25,6 +25,7 @@ HeHE-maker can do much more to facilitate the publishing of a paper by using fla
 * This list not helpful enough? Use `-h` or `--help`!
 * To specify input and output path, use `-i` and `-o` (or `--input` and `--output` respectively). For example, running `hehemaker -o "C:\\Users\\<some user>\\Desktop"` will assemble the pages in the current directory and output them to the desktop.
 * To suppress the requirement for the number of pages to fit nicely on the print format, use `-f` or `--force`. (This is only necessary when running in normal mode, i.e. not using other flags)
+* To get only specific pages of PDF(s) in a directory, use `-g` or `--get` and specify which pages you want.
 * To convert from a printed version to a web version, use `-s` or `--split`.
 * To remove one or more pages use `-rm` or `--remove` followed by the page number(s) to be removed. Example: To remove the first and last page of a 12 page file, use `hehemaker -rm 1 12 -i "<path to input>" -o "<path to output>"`
 * To insert pages into an existing file, use `-ins` or `--insert` followed by the path to the pages to be inserted, and `-x` (or `--index`) followed by where the pages should be inserted. Example: An article saved in "C:\\Users\\Hacke\\..\\article" is to be inserted at page 3. Use `hehemaker -ins "C:\\Users\\Hacke\\..\\article" -x 3 -i "<path to input>" -o "<path to output>"`
