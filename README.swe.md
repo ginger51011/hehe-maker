@@ -1,5 +1,5 @@
 # HeHE-maker
-*Denna version ~~kan vara något~~ är väldigt utdaterad. För en fullständig guide, se `README.md`*
+*Denna version ~~kan vara något~~ är __väldigt__ utdaterad. För en fullständig guide, se `README.md`*
 
 **HeHE-maker** är ett enkelt verktyg för att skapa en webbversion och en version för tryck av HeHE, och lite andra saker, som kan köras i kommandotolken med Python. För att skapa en ny upplaga av HeHE, börja med att sätta ihop varje sida i valfritt programm, allt från MS Paint till OpenOffice fungerar, bara sätt in texten på mallarna du fått av Picasso och exportera varje sida som en PDF i en annars tom mapp. Se till att de hamnar i rätt ordning, dvs. förstasidan högst upp, följt av andra sidan osv. (förslagsvis genom att namnge dem till 01.pdf, 02.pdf, 03.pdf etc etc). Antalet sidor måste som standard vara = 0 (mod 4) för att programmet ska fungera!
 
