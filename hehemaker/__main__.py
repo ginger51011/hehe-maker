@@ -8,11 +8,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--force", action="store_true", help="Suppresses the need for the number of pages to be = 0 (mod 4)")     # If flag is used saves a true value
 parser.add_argument("-s", "--split", action="store_true", help="Will split pages in two, ordering as if this was a print file")     # Flag for splitting a print version
 parser.add_argument("-ins", "--insert", help="Inserts the pages given at the target page, pushes the page of that number forward")      # Flag to insert page
-parser.add_argument("-i", "--index", help="Page number at which pages should be inserted")     # Where to insert pages
-parser.add_argument("-rm", "--remove", action="store_const", const=int, default=[], help="Removes the pages given from the PDF specified")      # Flag to remove pages
-parser.add_argument("rm_pages", nargs="*", metavar="R", type=int, help="A page to be removed")      # Pages to be removed as specified by user, nargs="*" used to set as optional and a list
-parser.add_argument("input", nargs="?", default="./", help="Path to pages, defaults to current directory")      # Our input and output is the current directory by default, nargs="?" makes this optional
-parser.add_argument("output", nargs="?", default="./", help="Path to where you want the papers saved, defaults to current directory")
+parser.add_argument("-x", "--index", help="Page number at which pages should be inserted")     # Where to insert pages
+parser.add_argument("-rm", "--remove", nargs="+", type=int, help="Removes the pages given from the PDF specified")      # Flag to remove pages
+parser.add_argument("-i", "--input", default="./", help="Path to pages, defaults to current directory")      # Our input and output is the current directory by default
+parser.add_argument("-o", "--output", default="./", help="Path to where you want the papers saved, defaults to current directory")
 
 args = parser.parse_args()      # Collects our input in args
 
@@ -37,7 +36,11 @@ def create_page_list(path):
 
     # Creates a PdfReader for each PDF document
     for listing in page_listings:
-        pdf_readers.append(PdfReader(path + "\\" + listing))
+        try:
+            pdf_readers.append(PdfReader(path + "\\" + listing))
+        except:
+            print("Error encountered, skipping " + listing + "...")     # Shitty error handling if we don't have a PDF
+            continue
 
     # Goes through the document for each reader and adds all pages from that reader
     for reader in pdf_readers:
@@ -159,7 +162,7 @@ def main():
     if args.split:
         print_to_web(pages_in)
     elif args.remove:
-        remove_pages(pages_in, args.rm_pages)
+        remove_pages(pages_in, args.remove)
     elif args.insert:
         pages_to_be_inserted = create_page_list(args.insert)
         insert_pages(pages_in, pages_to_be_inserted, args.ins_index)

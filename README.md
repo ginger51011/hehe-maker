@@ -14,7 +14,7 @@ Done! You can now use HeHE-maker by typing `hehemaker` followed by arguments (ac
 
 ## Running the program
 
-Simply use `hehemaker "<path to input>" "<path to output>"` and the script will create print.pdf and web.pdf at the specified path. The path can either be full, like `C:\\User\\...\\example` or relative, like `./` for the current folder/directory.
+Simply use `hehemaker -i "<path to input>" -o "<path to output>"` and the script will create print.pdf and web.pdf at the specified path. The path can either be full, like `C:\\User\\...\\example` or relative, or be omitted for HeHE-maker to default to the current directory.
 
 If you are on Windows and this fails, check to see if Python and Python/Scripts are in your PATH-variables (Swe: *Miljövariabler*).
 
@@ -23,10 +23,11 @@ If you are on Windows and this fails, check to see if Python and Python/Scripts 
 HeHE-maker can do much more to facilitate the publishing of a paper by using flags to set functions. These are written before the input and output paths. They are as follows:
 
 * This list not helpful enough? Use `-h` or `--help`!
+* To specify input and output path, use `-i` and `-o` (or `--input` and `--output` respectivly). For example, running `hehemaker -o "C:\\Users\\<some user>\\Desktop"` will assemble the pages in the current directory and output them to the desktop.
 * To suppress the requirement for the number of pages to fit nicely on the print format, use `-f` or `--force`. (This is only necessary when running in normal mode, i.e. not using other flags)
 * To convert from a printed version to a web version, use `-s` or `--split`.
-* To remove one or more pages use `-rm` or `--remove` followed by the page number(s) to be removed. Example: To remove the first and last page of a 12 page file, use `hehemaker -rm 1 12 "<path to input>" "<path to output>"`
-* To insert pages into an existing file, use `-ins` or `--insert` followed by the path to the pages to be inserted, and `-i` (or `--index`) followed by where the pages should be inserted. Example: An article saved in "C:\\Users\\Hacke\\..\\article" is to be inserted at page 3. Use `hehemaker -ins "C:\\Users\\Hacke\\..\\article" -i 3 "<path to input>" "<path to output>"`
+* To remove one or more pages use `-rm` or `--remove` followed by the page number(s) to be removed. Example: To remove the first and last page of a 12 page file, use `hehemaker -rm 1 12 -i "<path to input>" -o "<path to output>"`
+* To insert pages into an existing file, use `-ins` or `--insert` followed by the path to the pages to be inserted, and `-x` (or `--index`) followed by where the pages should be inserted. Example: An article saved in "C:\\Users\\Hacke\\..\\article" is to be inserted at page 3. Use `hehemaker -ins "C:\\Users\\Hacke\\..\\article" -x 3 -i "<path to input>" -o "<path to output>"`
 
 ### Further Examples
 
@@ -36,17 +37,17 @@ HeHE-maker is capable of using relative paths to find the directory/folder of yo
 
 #### Little Timmy
 
-This example does not use relative paths or the default value for input/output, but the logic is the same.
+Little Timmy has an old printed version of a paper as a PDF file, `old.pdf`, but he wants to censor the article on pages 4-5 and replace it with a two-page ad. He saves `old.pdf` in an otherwise empty directory `~./somedir/` and saves his ad in the (otherwise empty) directory `~./ad/`.
 
-Little Timmy has an old printed version of a paper as a PDF file, `old.pdf`, but he wants to censor the article on pages 4-5 and replace it with a two-page ad. He saves `old.pdf` in a new empty folder/directory at the path `C:\Users\Timmy\old\`. He has his ad in an otherwise empty folder at path `C:\Users\Timmy\ad\`. 
+Timmy starts by creating a web version by switching directory to `~./somedir/` and running `hehemaker -s`. He then removes `old.pdf`; `~./somedir/` now only contains `split.pdf`.
 
-He starts by creating a directory `C:\Users\Timmy\new\` and creates a web version by running `hehemaker -s "C:\\Users\\Timmy\\old" "C:\\Users\\Timmy\\new"`.
+He now deletes the unwanted article, in accordance with his local Supreme Leader's wishes, by running `hehemaker -rm 4 5`. He then deletes all evidence by removing the old `split.pdf`.
 
-He deletes `old.pdf` and replaces it with `web.pdf`created in the `\new\`-directory and then runs `hehemaker -rm 4 5 "C:\\Users\\Timmy\\old" "C:\\Users\\Timmy\\new"`.
+He now inserts the ad (probably for his beloved Supreme Leader) by running `hehemaker -ins "~./ad/" -x 4`, and deletes the old `removed.pdf`.
 
-He deletes `web.pdf` and replaces it with `removed.pdf`created in the `\new\`-directory. He then inserts his ad by running `hehemaker -ins "C:\\Users\\Timmy\\ad" -i 4 "C:\\Users\\Timmy\\old" "C:\\Users\\Timmy\\new"`. 
+Little Timmy now wants the whole paper in a printable format on his desktop, so he finally runs `hehemaker -o "C:\\Users\\TimmysMom\\Desktop"`.
 
-He now wants the whole paper in a printable format on his desktop, so he finally runs `hehemaker "C:\\Users\\Timmy\\new" "C:\\Users\\Timmy\\Desktop"`.
+Good job Timmy!
 
 ## Why
 
