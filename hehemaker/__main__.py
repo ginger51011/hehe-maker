@@ -11,8 +11,8 @@ parser.add_argument("-ins", "--insert", help="Inserts the pages given at the tar
 parser.add_argument("-i", "--index", help="Page number at which pages should be inserted")     # Where to insert pages
 parser.add_argument("-rm", "--remove", action="store_const", const=int, default=[], help="Removes the pages given from the PDF specified")      # Flag to remove pages
 parser.add_argument("rm_pages", nargs="*", metavar="R", type=int, help="A page to be removed")      # Pages to be removed as specified by user, nargs="*" used to set as optional and a list
-parser.add_argument("input", nargs="?", default="./", help="Path to pages")      # Our input and output is the current directory by default, nargs="?" makes this optional
-parser.add_argument("output", nargs="?", default="./", help="Path to where you want the papers saved")
+parser.add_argument("input", nargs="?", default="./", help="Path to pages, defaults to current directory")      # Our input and output is the current directory by default, nargs="?" makes this optional
+parser.add_argument("output", nargs="?", default="./", help="Path to where you want the papers saved, defaults to current directory")
 
 args = parser.parse_args()      # Collects our input in args
 

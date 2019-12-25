@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='hehe-maker',
-    version='1.1.5a',
+    version='1.2.1a',
     author='Emil Jonathan Eriksson',
     author_email='eje1999@gmail.com',
     description='Ett enkelt kommandoverktyg för att sätta ihop PDF:er till HeHE | A simple command line tool to modify papers in PDF format',
