@@ -18,5 +18,8 @@ setup(
         "console_scripts": [
             "hehemaker=hehemaker.__main__:main"   # Must be underscore
         ]
-    }
+    },
+    install_requires=[      # So that pip also installs pdfrw
+          'pdfrw',
+      ],
 )
