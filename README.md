@@ -6,7 +6,7 @@
 
 ## Quickstart
 
-This program is part if the Python Index (PyPi) and can easily be installed and run using `pip`. Start by installing Python 3.x from [here](https://www.python.org/downloads/), and run `python -v` in your console and make sure everything looks reasonable. Then run the following commands:
+This program is part if the Python Package Index (PyPi) and can easily be installed and run using `pip`. Start by installing Python 3.x from [here](https://www.python.org/downloads/), and run `python -v` in your console and make sure everything looks reasonable. Then run the following commands:
 
 * `pip install hehe-maker`
 
