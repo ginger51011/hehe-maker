@@ -1,2 +1,3 @@
 pdfrw
-pdfminer.six
+pdfminer
+markovify
