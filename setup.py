@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='hehe-maker',
-    version='1.3.1a',
+    version='1.3.1',
     author='Emil Jonathan Eriksson',
     author_email='eje1999@gmail.com',
     description='A simple command line tool to modify papers in PDF format. Can also create new articles from PDF(s).',
@@ -22,6 +22,6 @@ setup(
     install_requires=[      # So that pip also installs pdfrw
           "pdfrw",
           "pdfminer",
-          "morkovify",
+          "markovify",
       ],
 )

@@ -2,7 +2,7 @@
 from pdfrw import PdfReader, PdfWriter, PageMerge
 import os
 import argparse
-from autoarticle import Autoarticle     # The class in our autoarticle.py file
+from .autoarticle import Autoarticle     # The class in our autoarticle.py file
 
 # Parser so we can control everything from the command line (smaht)
 parser = argparse.ArgumentParser()
@@ -14,7 +14,7 @@ parser.add_argument("-rm", "--remove", nargs="+", type=int, help="Removes the pa
 parser.add_argument("-g", "--get", nargs="+", type=int, help="Outputs the pages given from the PDF specified")      # Flag to get pages
 parser.add_argument("-i", "--input", default="./", help="Path to pages, defaults to current directory")      # Our input and output is the current directory by default
 parser.add_argument("-o", "--output", default="./", help="Path to where you want the papers saved, defaults to current directory")
-parser.add_argument("-aa", "--autoarticle", default="40", help="Creates a new article in .txt format at the output based on the papers in the input of this length (sentances). Defaults to 40")
+parser.add_argument("-aa", "--autoarticle", nargs="?", const="40", help="Creates a new article in .txt format at the output based on the PDF(s) in the input of this length (sentances). Defaults to 40")    # Const är vad det får om man ej anger det
 
 args = parser.parse_args()      # Collects our input in args
 
