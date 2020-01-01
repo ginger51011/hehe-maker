@@ -1,6 +1,7 @@
 # HeHE-maker
 
 *For comprehensive guide in Swedish, as created for Redaktionen at E-sektionen, see `README.swe.md`*
+
 *__HeHE-maker is now capable of writing its' own articles! Check out the -aa flag for more information__*
 
 **HeHE-maker** is a simple command line-tool to create a paper to be published in printed and/or web form. Simply create the pages you want, order them in an otherwise empty directory/folder (simply naming them 01.pdf, 02.pdf, 03.pdf etc. is enough) and let the script create printable versions, as well as web versions, for you! If more than one page happens to be in the same PDF-file, for example if an article has two pages in the same file, HeHE-maker will take care of this for you.
