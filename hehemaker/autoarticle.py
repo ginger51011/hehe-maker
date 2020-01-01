@@ -11,50 +11,48 @@ class autoarticle:
     with path(s) in listings
     """
 
-    def __init__(self, listings):
+    def __init__(self, listings):   # Comparable to a constructor in Java, self refers to the object
         self.listings = listings
         self.text = ""
 
-    def convert_pdf_to_txt(self, path):
-        """Directly from stackoverflow
+    def convert_pdf_to_txt(self):
+        """Directly from stackoverflow, some edits
         """
         rsrcmgr = PDFResourceManager()
         retstr = io.StringIO()
         codec = 'utf-8'
         laparams = LAParams()
         device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
-        fp = open(path, 'rb')
         interpreter = PDFPageInterpreter(rsrcmgr, device)
         password = ""
         maxpages = 0
         caching = True
         pagenos = set()
 
-        for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
+        for path in self.listings:
+            fp = open(path, 'rb')
+            for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
                                   password=password,
                                   caching=caching,
                                   check_extractable=True):
-            interpreter.process_page(page)
+                interpreter.process_page(page)
 
-        text = retstr.getvalue()
+            text = retstr.getvalue()
 
-        fp.close()
-        device.close()
-        retstr.close()
-        self.text = text
+            fp.close()
+            device.close()
+            retstr.close()
+            self.text = self.text + text
     
-    def create_article(self):
+    def create_article(self, length=40):
+        """Creates a new article using Markov chains (via markovify) and returns a string
+        of the new article with length amount of sentances (defaults to 40)
+        """
+        article = ""
         text_model = markovify.Text(self.text)
         
-        for i in range(0, 40):
-            print(text_model.make_sentence())
+        for i in range(0, length):
+            article = article + text_model.make_sentence()
 
-
-def main():
-    aa = autoarticle("C:\\Users\\Emil\\Documents\\HeHE\\source\\2019-04_webb.pdf")
-    aa.convert_pdf_to_txt("C:\\Users\\Emil\\Documents\\HeHE\\source\\2019-04_webb.pdf")
-    aa.create_article()
-
-if __name__ == "__main__":
-    main()
+        return article
         
