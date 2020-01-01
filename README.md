@@ -1,6 +1,7 @@
 # HeHE-maker
 
 *For comprehensive guide in Swedish, as created for Redaktionen at E-sektionen, see `README.swe.md`*
+*__HeHE-maker is now capable of writing its' own articles! Check out the -aa flag for more information__*
 
 **HeHE-maker** is a simple command line-tool to create a paper to be published in printed and/or web form. Simply create the pages you want, order them in an otherwise empty directory/folder (simply naming them 01.pdf, 02.pdf, 03.pdf etc. is enough) and let the script create printable versions, as well as web versions, for you! If more than one page happens to be in the same PDF-file, for example if an article has two pages in the same file, HeHE-maker will take care of this for you.
 
@@ -29,6 +30,7 @@ HeHE-maker can do much more to facilitate the publishing of a paper by using fla
 * To convert from a printed version to a web version, use `-s` or `--split`.
 * To remove one or more pages use `-rm` or `--remove` followed by the page number(s) to be removed. Example: To remove the first and last page of a 12 page file, use `hehemaker -rm 1 12 -i "<path to input>" -o "<path to output>"`
 * To insert pages into an existing file, use `-ins` or `--insert` followed by the path to the pages to be inserted, and `-x` (or `--index`) followed by where the pages should be inserted. Example: An article saved in "C:\\Users\\Hacke\\..\\article" is to be inserted at page 3. Use `hehemaker -ins "C:\\Users\\Hacke\\..\\article" -x 3 -i "<path to input>" -o "<path to output>"`
+* HeHE-maker can create .txt files of new articles using Markov chains. Simply use `-aa` or `--autoarticle` (and specify the number of sentances wanted, defaults to 40) and HeHE-maker will use the PDF files at the input directory to create a new article and save it at the output directory. Note that this works best with a lot of samples!
 
 ### Further Examples
 

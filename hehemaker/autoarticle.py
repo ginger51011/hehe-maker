@@ -31,19 +31,22 @@ class Autoarticle:
         pagenos = set()
 
         for path in self.listings:
-            fp = open(path, 'rb')
-            for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
-                                  password=password,
-                                  caching=caching,
-                                  check_extractable=True):
-                interpreter.process_page(page)
+            try:
+                fp = open(path, 'rb')
+                for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
+                                      password=password,
+                                      caching=caching,
+                                      check_extractable=True):
+                    interpreter.process_page(page)
 
-            text = retstr.getvalue()
+                text = retstr.getvalue()
 
-            fp.close()
-            device.close()
-            retstr.close()
-            self.text = self.text + text
+                fp.close()
+                device.close()
+                retstr.close()
+                self.text = self.text + text
+            except:
+                print("Error encountered when trying to parse PDF as text, skipping " + path + "...")
     
     def create_article(self, length=40):
         """Creates a new article using Markov chains (via markovify) and returns a string
