@@ -20,6 +20,8 @@ setup(
         ]
     },
     install_requires=[      # So that pip also installs pdfrw
-          'pdfrw',
+          "pdfrw",
+          "pdfminer",
+          "morkovify",
       ],
 )
