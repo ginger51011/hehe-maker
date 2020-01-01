@@ -16,7 +16,8 @@ class Autoarticle:
         self.text = ""
 
     def convert_pdf_to_txt(self):
-        """Directly from stackoverflow, some edits
+        """Directly from stackoverflow, some edits.
+        Converts PDF(s) to text
         """
         rsrcmgr = PDFResourceManager()
         retstr = io.StringIO()
@@ -52,7 +53,10 @@ class Autoarticle:
         text_model = markovify.Text(self.text)
         
         for i in range(0, length):
-            article = article + text_model.make_sentence()
+            try:
+                article = article + " " + text_model.make_sentence()
+            except:
+                pass
 
         return article
         

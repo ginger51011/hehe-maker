@@ -166,16 +166,24 @@ def get_pages(pages_in, page_numbers):
 
 def create_article(path, length):
     """ Creates a new article using Markov chains based on the PDF(s)
-    at path, and with length sentances
+    at path, and with length number of sentances
     """
-    page_listings = os.listdir(path)    # A listing is a single PDF file
-    aa = Autoarticle(page_listings)
-    aa.convert_pdf_to_txt()
-    new_article_text = aa.create_article(length)
+    pdf_listings = os.listdir(path)    # A listing is a single PDF file
+    paths = []
 
-    new_article_file = open("autoarticle.txt", "w+")
+    for listing in pdf_listings:    # We need the full path to the PDF(s)
+        file_path = path + "\\" + listing
+        paths.append(file_path)
+
+    aa = Autoarticle(paths)     # Creates a new Autoarticle object
+    aa.convert_pdf_to_txt()
+    new_article_text = aa.create_article(int(length))   # length should be parsed as int
+
+    new_article_file = open(args.output + "\\autoarticle.txt", "w+")    # Creates the txt file with the new article
     new_article_file.write(new_article_text)
     new_article_file.close()
+
+    del aa  # We don't want to save the object in cache
 
 
 
@@ -206,7 +214,10 @@ def main():
         create_print_version(pages_in)
         create_web_version(pages_in)
 
-    print("PDF created successfully! Grattis!")
+    if not args.autoarticle:
+        print("PDF created successfully! Grattis!")
+    else:
+        print("Automatic article created successfully! Grattis!")
 
 if __name__ == "__main__":      # If this code is run on its' own and is not imported, run the following (main())
     main()
