@@ -42,11 +42,12 @@ class Autoarticle:
                 text = retstr.getvalue()
 
                 fp.close()
-                device.close()
-                retstr.close()
                 self.text = self.text + text
             except:
                 print("Error encountered when trying to parse PDF as text, skipping " + path + "...")
+    
+        device.close()
+        retstr.close()
     
     def create_article(self, length=40):
         """Creates a new article using Markov chains (via markovify) and returns a string

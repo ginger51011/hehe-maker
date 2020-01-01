@@ -1,3 +1,4 @@
 build/
 dist/
 hehe_maker.egg-info/
+hehemaker/__pycache__

@@ -176,7 +176,7 @@ def create_article(path, length):
         paths.append(file_path)
 
     aa = Autoarticle(paths)     # Creates a new Autoarticle object
-    print("Converting PDF(s) to text...")
+    print("Converting PDF(s) to text (this can take a while)...")
     aa.convert_pdf_to_txt()
     print("Creating new article...")
     new_article_text = aa.create_article(int(length))   # length should be parsed as int
