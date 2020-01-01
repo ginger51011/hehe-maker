@@ -6,7 +6,7 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 import markovify
 
-class autoarticle:
+class Autoarticle:
     """Class to create a text from PDF(s) in a directory 
     with path(s) in listings
     """

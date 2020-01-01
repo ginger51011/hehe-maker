@@ -2,6 +2,7 @@
 from pdfrw import PdfReader, PdfWriter, PageMerge
 import os
 import argparse
+from autoarticle import Autoarticle     # The class in our autoarticle.py file
 
 # Parser so we can control everything from the command line (smaht)
 parser = argparse.ArgumentParser()
@@ -13,6 +14,7 @@ parser.add_argument("-rm", "--remove", nargs="+", type=int, help="Removes the pa
 parser.add_argument("-g", "--get", nargs="+", type=int, help="Outputs the pages given from the PDF specified")      # Flag to get pages
 parser.add_argument("-i", "--input", default="./", help="Path to pages, defaults to current directory")      # Our input and output is the current directory by default
 parser.add_argument("-o", "--output", default="./", help="Path to where you want the papers saved, defaults to current directory")
+parser.add_argument("-aa", "--autoarticle", default="40", help="Creates a new article in .txt format at the output based on the papers in the input of this length (sentances). Defaults to 40")
 
 args = parser.parse_args()      # Collects our input in args
 
@@ -22,7 +24,7 @@ def pagecount_is_legal(pages_in):
     """Throws an exception if we don't force mod 4 != 0
     of the pages, or we use another flag that ignores this.
     """
-    if not (args.force or args.split or args.remove or args.input or args.get):
+    if not (args.force or args.split or args.remove or args.input or args.get or args.autoarticle):
         nbr_of_pages = len(pages_in)
         if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
             raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version. Use -f to force past this.")
@@ -162,6 +164,20 @@ def get_pages(pages_in, page_numbers):
         else:
             PdfWriter(args.output + "\\get_page_" + str(nbr + 1) + ".pdf").addpage(pages_in[nbr]).write()
 
+def create_article(path, length):
+    """ Creates a new article using Markov chains based on the PDF(s)
+    at path, and with length sentances
+    """
+    page_listings = os.listdir(path)    # A listing is a single PDF file
+    aa = Autoarticle(page_listings)
+    aa.convert_pdf_to_txt()
+    new_article_text = aa.create_article(length)
+
+    new_article_file = open("autoarticle.txt", "w+")
+    new_article_file.write(new_article_text)
+    new_article_file.close()
+
+
 
 # End of defining functions
 
@@ -184,6 +200,8 @@ def main():
         insert_pages(pages_in, pages_to_be_inserted, args.ins_index)
     elif args.get:
         get_pages(pages_in, args.get)
+    elif args.autoarticle:
+        create_article(args.input, args.autoarticle)
     else:
         create_print_version(pages_in)
         create_web_version(pages_in)
