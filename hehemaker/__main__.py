@@ -191,14 +191,19 @@ def create_article(path, length):
 
     if text_from_pdf:   # We don't create a new file if we haven't extracted any text
         print("Saving extracted text as .txt...")
-        text_document = open(args.output + "\\extracted_text_%f.txt" % time.time_ns(), "w+", encoding="utf-8")      # Without the encoding this thing goes haywire. Also: Fulhack extraction thing :)
+        path_to_extraction = args.output + "\\extracted_text.txt"  # Making sure we don't overwrite an old file
+        number = 1
+        while os.path.exists(path_to_extraction):
+            path_to_extraction = args.output + "\\extracted_text" + str(number) + ".txt"
+            number = number + 1
+        text_document = open(path_to_extraction, "w+", encoding="utf-8")      # Without the encoding this thing goes haywire. Also: Fulhack extraction thing :)
         text_document.write(text_from_pdf)
         text_document.close()
 
     print("Creating new article...")
     new_article_text = aa.create_article(int(length))   # length should be parsed as int
 
-    new_article_file = open(args.output + "\\autoarticle.txt", "w+")    # Creates the txt file with the new article
+    new_article_file = open(args.output + "\\autoarticle.txt", "w+", encoding="utf-8")    # Creates the txt file with the new article
     new_article_file.write(new_article_text)
     new_article_file.close()
 

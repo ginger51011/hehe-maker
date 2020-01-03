@@ -30,7 +30,7 @@ class Autoarticle:
 
     def convert_pdf_to_txt(self):
         """Directly from stackoverflow, some edits.
-        Converts PDF(s) to text
+        Converts PDF(s) to text if found
         """
         rsrcmgr = PDFResourceManager()
         retstr = io.StringIO()
