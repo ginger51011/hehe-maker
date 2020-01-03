@@ -3,7 +3,7 @@ from pdfrw import PdfReader, PdfWriter, PageMerge
 import os
 import argparse
 import time
-from .autoarticle import Autoarticle     # The class in our autoarticle.py file
+from autoarticle import Autoarticle     # The class in our autoarticle.py file
 
 # Parser so we can control everything from the command line (smaht)
 parser = argparse.ArgumentParser()
@@ -175,6 +175,10 @@ def create_article(path, length):
     for listing in pdf_listings:    # We need the full path to the PDF(s)
         file_path = path + "\\" + listing
         paths.append(file_path)
+    
+    if len(paths) == 0:
+        print("Cannot create article from empty directory")
+        return
 
     aa = Autoarticle(paths)     # Creates a new Autoarticle object
 
@@ -183,12 +187,13 @@ def create_article(path, length):
     text_from_pdf = aa.text     # We don't want to extract the text and then write it again
 
     print("Adding .txt files to model...")
-    #aa.extract_text_from_txt()
+    aa.extract_text_from_txt()
 
-    print("Saving extracted text as .txt...")
-    text_document = open(args.output + "\\extracted_text_%f.txt" % time.time_ns(), "w+", encoding="utf-8")      # Without the encoding this thing goes haywire. Also: Fulhack extraction thing :)
-    text_document.write(text_from_pdf)
-    text_document.close()
+    if text_from_pdf:   # We don't create a new file if we haven't extracted any text
+        print("Saving extracted text as .txt...")
+        text_document = open(args.output + "\\extracted_text_%f.txt" % time.time_ns(), "w+", encoding="utf-8")      # Without the encoding this thing goes haywire. Also: Fulhack extraction thing :)
+        text_document.write(text_from_pdf)
+        text_document.close()
 
     print("Creating new article...")
     new_article_text = aa.create_article(int(length))   # length should be parsed as int
@@ -209,8 +214,11 @@ def main():
     # Throws exception if we want to insert a page but have not specified an index
     if (args.insert and not args.index) or (not args.insert and args.index):
         raise EnvironmentError("You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -x")
-
-    pages_in = create_page_list(args.input)     # Creates list of all pages that we take as input
+    
+    pages_in = []
+    if not args.autoarticle:
+        pages_in = create_page_list(args.input)     # Creates list of all pages that we take as input
+    
     pagecount_is_legal(pages_in)    # Checks to see if we have a legal number of pages, or force past it
 
     if args.split:

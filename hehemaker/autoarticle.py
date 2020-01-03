@@ -22,7 +22,7 @@ class Autoarticle:
         for path in self.listings:
             try:
                 if path.endswith(".txt"):   # Checks if this is a .txt document
-                    text_document = open(path, "r")
+                    text_document = open(path, "r", encoding="utf-8")
                     self.text = self.text + " " + text_document.read()
                     text_document.close()
             except:
@@ -67,11 +67,7 @@ class Autoarticle:
         of the new article with length amount of sentances (defaults to 40)
         """
         article = ""
-        text_model = ""
-        try:
-            text_model = markovify.Text(self.text)
-        except:
-            return
+        text_model = markovify.Text(self.text)
         
         for i in range(0, length):
             try:
