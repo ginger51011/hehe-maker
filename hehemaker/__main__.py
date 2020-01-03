@@ -2,7 +2,8 @@
 from pdfrw import PdfReader, PdfWriter, PageMerge
 import os
 import argparse
-from .autoarticle import Autoarticle     # The class in our autoarticle.py file
+import time
+from hehemaker.autoarticle import Autoarticle     # The class in our autoarticle.py file
 
 # Parser so we can control everything from the command line (smaht)
 parser = argparse.ArgumentParser()
@@ -14,7 +15,7 @@ parser.add_argument("-rm", "--remove", nargs="+", type=int, help="Removes the pa
 parser.add_argument("-g", "--get", nargs="+", type=int, help="Outputs the pages given from the PDF specified")      # Flag to get pages
 parser.add_argument("-i", "--input", default="./", help="Path to pages, defaults to current directory")      # Our input and output is the current directory by default
 parser.add_argument("-o", "--output", default="./", help="Path to where you want the papers saved, defaults to current directory")
-parser.add_argument("-aa", "--autoarticle", nargs="?", const="40", help="Creates a new article in .txt format at the output based on the PDF(s) in the input of this length (sentances). Defaults to 40")    # Const är vad det får om man ej anger det
+parser.add_argument("-aa", "--autoarticle", nargs="?", const="40", help="Creates a new article in .txt format at the output based on the PDF(s) and .txt-documents in the input of this length (sentances). Defaults to 40. Will save extracted text from PDF(s) as a .txt file")    # Const är vad det får om man ej anger det
 
 args = parser.parse_args()      # Collects our input in args
 
@@ -75,7 +76,7 @@ def create_print_version(pages_in):
     
     # Where it should be -> which pages are added -> write
     PdfWriter(args.output + "\\" + "print.pdf").addpages(pages_out).write()
-
+# Sök Diod
 def create_web_version(pages_in):
     """Puts together the pages in pages_in to a signle PDF in
     web-format
@@ -176,8 +177,19 @@ def create_article(path, length):
         paths.append(file_path)
 
     aa = Autoarticle(paths)     # Creates a new Autoarticle object
+
     print("Converting PDF(s) to text (this can take a while)...")
     aa.convert_pdf_to_txt()
+    text_from_pdf = aa.text     # We don't want to extract the text and then write it again
+
+    print("Adding .txt files to model...")
+    #aa.extract_text_from_txt()
+
+    print("Saving extracted text as .txt...")
+    text_document = open(args.output + "\\extracted_text_%f.txt" % time.time_ns(), "w+", encoding="utf-8")      # Without the encoding this thing goes haywire. Also: Fulhack extraction thing :)
+    text_document.write(text_from_pdf)
+    text_document.close()
+
     print("Creating new article...")
     new_article_text = aa.create_article(int(length))   # length should be parsed as int
 
@@ -185,7 +197,7 @@ def create_article(path, length):
     new_article_file.write(new_article_text)
     new_article_file.close()
 
-    del aa  # We don't want to save the object in cache
+    del aa  # Remove the damn object
 
 
 
@@ -196,7 +208,7 @@ def create_article(path, length):
 def main():
     # Throws exception if we want to insert a page but have not specified an index
     if (args.insert and not args.index) or (not args.insert and args.index):
-        raise EnvironmentError("You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -i")
+        raise EnvironmentError("You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -x")
 
     pages_in = create_page_list(args.input)     # Creates list of all pages that we take as input
     pagecount_is_legal(pages_in)    # Checks to see if we have a legal number of pages, or force past it

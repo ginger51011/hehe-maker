@@ -7,13 +7,26 @@ from pdfminer.pdfpage import PDFPage
 import markovify
 
 class Autoarticle:
-    """Class to create a text from PDF(s) in a directory 
-    with path(s) in listings
+    """Class to generate a text from PDF(s) and .txt-documents in a directory 
+    with path(s) in listings based on Markov chains
     """
 
     def __init__(self, listings):   # Comparable to a constructor in Java, self refers to the object
         self.listings = listings
         self.text = ""
+
+    def extract_text_from_txt(self):
+        """Extracts text from an .txt document, if one
+        is found in directory
+        """
+        for path in self.listings:
+            try:
+                if path.endswith(".txt"):   # Checks if this is a .txt document
+                    text_document = open(path, "r")
+                    self.text = self.text + " " + text_document.read()
+                    text_document.close()
+            except:
+                print("Error encountered when trying to parse .txt as text, skipping " + path + "...")
 
     def convert_pdf_to_txt(self):
         """Directly from stackoverflow, some edits.
@@ -31,17 +44,18 @@ class Autoarticle:
 
         for path in self.listings:
             try:
-                fp = open(path, 'rb')
-                for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
-                                      password=password,
-                                      caching=caching,
-                                      check_extractable=True):
-                    interpreter.process_page(page)
+                if path.endswith(".pdf"):      # Cheks if this is a pdf file
+                    fp = open(path, 'rb')
+                    for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
+                                        password=password,
+                                        caching=caching,
+                                        check_extractable=True):
+                        interpreter.process_page(page)
 
-                text = retstr.getvalue()
+                    text = retstr.getvalue()
 
-                fp.close()
-                self.text = self.text + text
+                    fp.close()
+                    self.text = self.text + " " + text
             except:
                 print("Error encountered when trying to parse PDF as text, skipping " + path + "...")
     
@@ -53,7 +67,11 @@ class Autoarticle:
         of the new article with length amount of sentances (defaults to 40)
         """
         article = ""
-        text_model = markovify.Text(self.text)
+        text_model = ""
+        try:
+            text_model = markovify.Text(self.text)
+        except:
+            return
         
         for i in range(0, length):
             try:
