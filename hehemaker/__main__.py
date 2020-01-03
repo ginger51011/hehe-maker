@@ -2,7 +2,6 @@
 from pdfrw import PdfReader, PdfWriter, PageMerge
 import os
 import argparse
-import time
 from .autoarticle import Autoarticle     # The class in our autoarticle.py file
 
 # Parser so we can control everything from the command line (smaht)
