@@ -14,6 +14,8 @@ This program is part if the Python Package Index (PyPi) and can easily be instal
 
 Done! You can now use HeHE-maker by typing `hehemaker` followed by arguments (according to "Running the program" below)!
 
+To check for updates, run `pip install --upgrade hehe-maker`
+
 ## Running the program
 
 Simply use `hehemaker -i "<path to input>" -o "<path to output>"` and the script will create print.pdf and web.pdf at the specified path. The path can either be full, like `C:\\User\\...\\example` or relative, or be omitted for HeHE-maker to default to the current directory.

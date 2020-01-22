@@ -2,7 +2,7 @@
 from pdfrw import PdfReader, PdfWriter, PageMerge
 import os
 import argparse
-from .autoarticle import Autoarticle     # The class in our autoarticle.py file
+#from .autoarticle import Autoarticle     # The class in our autoarticle.py file
 
 # Parser so we can control everything from the command line (smaht)
 parser = argparse.ArgumentParser()
@@ -40,9 +40,12 @@ def create_page_list(path):
     # Creates a PdfReader for each PDF document
     for listing in page_listings:
         try:
+            if not listing.endswith(".pdf"):    # We skip this listing if it's not an PDF
+                print("Skipping \"" + listing + "\", not a PDF...")
+                continue    # We continue the loop without creating PdfReader
             pdf_readers.append(PdfReader(path + "/" + listing))
         except Exception as e:  # Wow much error handeling...
-            print("Error: \"" + str(e) + "\" encountered, skipping " + listing + "...")     # Shitty error handling if we don't have a PDF
+            print("Error: \"" + str(e) + "\" encountered, skipping \"" + listing + "\"...")     # Shitty error handling if we don't have a PDF
             continue
 
     # Goes through the document for each reader and adds all pages from that reader
