@@ -40,9 +40,9 @@ def create_page_list(path):
     # Creates a PdfReader for each PDF document
     for listing in page_listings:
         try:
-            pdf_readers.append(PdfReader(path + "\\" + listing))
-        except:
-            print("Error encountered, skipping " + listing + "...")     # Shitty error handling if we don't have a PDF
+            pdf_readers.append(PdfReader(path + "/" + listing))
+        except Exception as e:  # Wow much error handeling...
+            print("Error " + e + " encountered, skipping " + listing + "...")     # Shitty error handling if we don't have a PDF
             continue
 
     # Goes through the document for each reader and adds all pages from that reader
@@ -74,7 +74,7 @@ def create_print_version(pages_in):
         pages_out += pages_in
     
     # Where it should be -> which pages are added -> write
-    PdfWriter(args.output + "\\" + "print.pdf").addpages(pages_out).write()
+    PdfWriter(args.output + "/" + "print.pdf").addpages(pages_out).write()
 # Sök Diod
 def create_web_version(pages_in):
     """Puts together the pages in pages_in to a signle PDF in
@@ -87,7 +87,7 @@ def create_web_version(pages_in):
     while len(pages_in) > 0:
         pages_out.append(pages_in.pop(0))
         
-    PdfWriter(args.output + "\\" + "web.pdf").addpages(pages_out).write()
+    PdfWriter(args.output + "/" + "web.pdf").addpages(pages_out).write()
 
 def print_to_web(pages_in):
     """Converts the pages in pages_in from print format to web format and
@@ -112,7 +112,7 @@ def print_to_web(pages_in):
 
     pages_out_sorted1.extend(pages_out_sorted2)     # The content of the second list is added to the first
 
-    PdfWriter(args.output + "\\split.pdf").addpages(pages_out_sorted1).write()
+    PdfWriter(args.output + "/split.pdf").addpages(pages_out_sorted1).write()
 
 def fixpage(*pages):
     """ Taken from example project in pdfrw. 
@@ -137,7 +137,7 @@ def remove_pages(pages_in, page_numbers):
     pages_out = pages_in.copy()
     for n in page_numbers:
         del pages_out[n - 1]     # Our list index start at 0, but the user starts counting pages at 1
-    PdfWriter(args.output + "\\removed.pdf").addpages(pages_out).write()
+    PdfWriter(args.output + "/removed.pdf").addpages(pages_out).write()
 
 def insert_pages(pages_in, pages_to_be_inserted, index):
     """ Inserts pages at specified index
@@ -148,7 +148,7 @@ def insert_pages(pages_in, pages_to_be_inserted, index):
 
     while len(pages_to_be_inserted) > 0:
         pages_out.insert(true_index, pages_to_be_inserted.pop(0))
-    PdfWriter(args.output + "\\inserted.pdf").addpages(pages_out).write()
+    PdfWriter(args.output + "/inserted.pdf").addpages(pages_out).write()
 
 def get_pages(pages_in, page_numbers):
     """ Creates a separate PDF file for each
@@ -160,19 +160,19 @@ def get_pages(pages_in, page_numbers):
             print(str(nbr + 1) + " is not a page, ignoring...")
             continue
         elif nbr + 1 < 10:      # We want a zero before page number
-            PdfWriter(args.output + "\\get_page_0" + str(nbr + 1) + ".pdf").addpage(pages_in[nbr]).write()
+            PdfWriter(args.output + "/get_page_0" + str(nbr + 1) + ".pdf").addpage(pages_in[nbr]).write()
         else:
-            PdfWriter(args.output + "\\get_page_" + str(nbr + 1) + ".pdf").addpage(pages_in[nbr]).write()
+            PdfWriter(args.output + "/get_page_" + str(nbr + 1) + ".pdf").addpage(pages_in[nbr]).write()
 
 def create_article(path, length):
-    """ Creates a new article using Markov chains based on the PDF(s)
+    """ Creates a new article using Markov chains based on the PDF(s) and .txt(s)
     at path, and with length number of sentances
     """
     pdf_listings = os.listdir(path)    # A listing is a single PDF file
     paths = []
 
     for listing in pdf_listings:    # We need the full path to the PDF(s)
-        file_path = path + "\\" + listing
+        file_path = path + "/" + listing
         paths.append(file_path)
     
     if len(paths) == 0:
@@ -190,10 +190,10 @@ def create_article(path, length):
 
     if text_from_pdf:   # We don't create a new file if we haven't extracted any text
         print("Saving extracted text as .txt...")
-        path_to_extraction = args.output + "\\extracted_text.txt"  # Making sure we don't overwrite an old file
+        path_to_extraction = args.output + "/extracted_text.txt"  # Making sure we don't overwrite an old file
         number = 1
         while os.path.exists(path_to_extraction):
-            path_to_extraction = args.output + "\\extracted_text" + str(number) + ".txt"
+            path_to_extraction = args.output + "/extracted_text" + str(number) + ".txt"
             number = number + 1
         text_document = open(path_to_extraction, "w+", encoding="utf-8")      # Without the encoding this thing goes haywire. Also: Fulhack extraction thing :)
         text_document.write(text_from_pdf)
@@ -202,7 +202,7 @@ def create_article(path, length):
     print("Creating new article...")
     new_article_text = aa.create_article(int(length))   # length should be parsed as int
 
-    new_article_file = open(args.output + "\\autoarticle.txt", "w+", encoding="utf-8")    # Creates the txt file with the new article
+    new_article_file = open(args.output + "/autoarticle.txt", "w+", encoding="utf-8")    # Creates the txt file with the new article
     new_article_file.write(new_article_text)
     new_article_file.close()
 
