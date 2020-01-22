@@ -42,7 +42,7 @@ def create_page_list(path):
         try:
             pdf_readers.append(PdfReader(path + "/" + listing))
         except Exception as e:  # Wow much error handeling...
-            print("Error " + e + " encountered, skipping " + listing + "...")     # Shitty error handling if we don't have a PDF
+            print("Error " + str(e) + " encountered, skipping " + listing + "...")     # Shitty error handling if we don't have a PDF
             continue
 
     # Goes through the document for each reader and adds all pages from that reader
