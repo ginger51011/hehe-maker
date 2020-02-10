@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='hehe-maker',
-    version='1.3.5',
+    version='1.3.7',
     author='Emil Jonathan Eriksson',
     author_email='eje1999@gmail.com',
     description='A simple command line tool to modify papers in PDF format. Can also create new articles from PDF(s).',
@@ -14,9 +14,9 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/ginger51011/hehe-maker",
     packages=find_packages(),
-    entry_points={  # Tells pipx what to do
+    entry_points={  # Tells python what to run
         "console_scripts": [
-            "hehemaker=hehemaker.__main__:main"   # Must be underscore
+            "hehemaker = hehemaker.hehemaker:main"   # Name of console script
         ]
     },
     install_requires=[      # So that pip also installs pdfrw

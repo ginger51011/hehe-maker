@@ -2,7 +2,7 @@
 from pdfrw import PdfReader, PdfWriter, PageMerge
 import os
 import argparse
-#from .autoarticle import Autoarticle     # The class in our autoarticle.py file
+from hehemaker.autoarticle import Autoarticle     # The class in our autoarticle.py file
 
 # Parser so we can control everything from the command line (smaht)
 parser = argparse.ArgumentParser()
@@ -80,7 +80,7 @@ def create_print_version(pages_in):
     PdfWriter(args.output + "/" + "print.pdf").addpages(pages_out).write()
 # Sök Diod
 def create_web_version(pages_in):
-    """Puts together the pages in pages_in to a signle PDF in
+    """Puts together the pages in pages_in to a single PDF in
     web-format
     """
     pages_in = pages_in.copy()
