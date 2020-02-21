@@ -8,7 +8,7 @@ from hehemaker.autoarticle import Autoarticle     # The class in our autoarticle
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--force", action="store_true", help="Suppresses the need for the number of pages to be = 0 (mod 4)")     # If flag is used saves a true value
 parser.add_argument("-s", "--split", action="store_true", help="Will split pages in two, ordering as if this was a print file")     # Flag for splitting a print version
-parser.add_argument("-ins", "--insert", help="Inserts the pages given at the target page, pushes the page of that number forward")      # Flag to insert page
+parser.add_argument("-ins", "--insert", help="Inserts the pages given at the target directory into the input-paper, pushes the page of that number forward")      # Flag to insert page
 parser.add_argument("-x", "--index", help="Page number at which pages should be inserted")     # Where to insert pages
 parser.add_argument("-rm", "--remove", nargs="+", type=int, help="Removes the pages given from the PDF specified")      # Flag to remove pages
 parser.add_argument("-g", "--get", nargs="+", type=int, help="Outputs the pages given from the PDF specified")      # Flag to get pages
@@ -24,7 +24,7 @@ def pagecount_is_legal(pages_in):
     """Throws an exception if we don't force mod 4 != 0
     of the pages, or we use another flag that ignores this.
     """
-    if not (args.force or args.split or args.remove or args.input or args.get or args.autoarticle):
+    if not (args.force or args.split or args.insert or args.index or args.remove or or args.get or args.autoarticle):   # Kontrollerar att vi inte försöker förbigå saker
         nbr_of_pages = len(pages_in)
         if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
             raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version. Use -f to force past this.")
