@@ -24,7 +24,7 @@ def pagecount_is_legal(pages_in):
     """Throws an exception if we don't force mod 4 != 0
     of the pages, or we use another flag that ignores this.
     """
-    if not (args.force or args.split or args.insert or args.index or args.remove or or args.get or args.autoarticle):   # Kontrollerar att vi inte försöker förbigå saker
+    if not (args.force or args.split or args.insert or args.index or args.remove or args.get or args.autoarticle):   # Kontrollerar att vi inte försöker förbigå saker
         nbr_of_pages = len(pages_in)
         if (nbr_of_pages % 4 != 0):     # If we don't have mod 4 == 0 we can't create a paper
             raise ValueError("Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version. Use -f to force past this.")
