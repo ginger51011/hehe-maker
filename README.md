@@ -12,6 +12,10 @@ This program is part if the Python Package Index (PyPi) and can easily be instal
 
 * `pip install hehe-maker`
 
+__Alternatively__
+
+* `pip3 install hehe-maker`
+
 Done! You can now use HeHE-maker by typing `hehemaker` followed by arguments (according to "Running the program" below)!
 
 To check for updates, run `pip install --upgrade hehe-maker`

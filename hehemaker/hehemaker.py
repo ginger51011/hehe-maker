@@ -61,7 +61,7 @@ def create_page_list(path):
     return pages
 
 def create_print_version(pages_in):
-    """Puts together the pages in pages_in to a signle PDF in
+    """Puts together the pages in pages_in to a single PDF in
     print-format
     """
     pages_in = pages_in.copy()
@@ -118,7 +118,7 @@ def print_to_web(pages_in):
     PdfWriter(args.output + "/split.pdf").addpages(pages_out_sorted1).write()
 
 def fixpage(*pages):
-    """ Taken from example project in pdfrw. 
+    """ Taken from example project in pdfrw.
     Puts two pages together into one
     """
     result = PageMerge() + (x for x in pages if x is not None)
@@ -138,8 +138,10 @@ def remove_pages(pages_in, page_numbers):
     and creates PDF with result
     """
     pages_out = pages_in.copy()
+    i = 0 # We need to keep track of how many pages we have removed
     for n in page_numbers:
-        del pages_out[n - 1]     # Our list index start at 0, but the user starts counting pages at 1
+        del pages_out[n - (1 + i)]     # Our list index start at 0, but the user starts counting pages at 1. 
+        i-=-1
     PdfWriter(args.output + "/removed.pdf").addpages(pages_out).write()
 
 def insert_pages(pages_in, pages_to_be_inserted, index):
@@ -177,7 +179,7 @@ def create_article(path, length):
     for listing in pdf_listings:    # We need the full path to the PDF(s)
         file_path = path + "/" + listing
         paths.append(file_path)
-    
+
     if len(paths) == 0:
         print("Cannot create article from empty directory")
         return
@@ -221,11 +223,11 @@ def main():
     # Throws exception if we want to insert a page but have not specified an index
     if (args.insert and not args.index) or (not args.insert and args.index):
         raise EnvironmentError("You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -x")
-    
+
     pages_in = []
     if not args.autoarticle:
         pages_in = create_page_list(args.input)     # Creates list of all pages that we take as input
-    
+
     pagecount_is_legal(pages_in)    # Checks to see if we have a legal number of pages, or force past it
 
     if args.split:
