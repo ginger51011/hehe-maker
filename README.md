@@ -1,6 +1,6 @@
 # HeHE-maker
 
-*For comprehensive guide in Swedish, as created for Redaktionen at E-sektionen, see `README.swe.md`*
+*For an (outdated) guide in Swedish, as created for Redaktionen at E-sektionen, see `README.swe.md`*
 
 *__HeHE-maker is now capable of writing its' own articles! Check out the -aa flag for more information__*
 
@@ -8,7 +8,7 @@
 
 ## Quickstart
 
-This program is part if the Python Package Index (PyPi) and can easily be installed and run using `pip`. Start by installing Python 3.x from [here](https://www.python.org/downloads/), and run `python -v` in your console and make sure everything looks reasonable. Then run the following commands:
+This program is part if the Python Package Index (PyPi) and can easily be installed and run using `pip`. Start by installing Python 3.x from [here](https://www.python.org/downloads/), and run `python -v` (or, in some cases, `python3 -v`) in your console and make sure everything looks reasonable. Then run the following commands:
 
 * `pip install hehe-maker`
 

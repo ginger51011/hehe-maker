@@ -141,8 +141,13 @@ def remove_pages(pages_in, page_numbers):
     i = 0      # We need to keep track of how many pages we have removed
     page_numbers.sort()     # We need these numbers to be in order
     for n in page_numbers:
-        del pages_out[n - (1 + i)]     # Our list index start at 0, but the user starts counting pages at 1. 
-        i-=-1
+        index = n - (1 + i)     # Our list index start at 0, but the user starts counting pages at 1. We also want to account for already removed pages
+        if index > len(pages_out):      # We can no longer remove pages
+            print("Page " + n + " could not be removed, skipping...")
+            break
+        else:
+            del pages_out[n - (1 + i)] 
+            i-=-1
     PdfWriter(args.output + "/removed.pdf").addpages(pages_out).write()
 
 def insert_pages(pages_in, pages_to_be_inserted, index):
