@@ -19,7 +19,16 @@ class Autoarticle:
         """Extracts text from an .txt document, if one
         is found in directory
         """
-        for path in self.listings:
+        if type(self.listings) is list:
+            for path in self.listings:
+                try:
+                    if path.endswith(".txt"):   # Checks if this is a .txt document
+                        text_document = open(path, "r", encoding="utf-8")
+                        self.text = self.text + " " + text_document.read()
+                        text_document.close()
+                except:
+                    print("Error encountered when trying to parse .txt as text, skipping " + path + "...")
+        elif type(self.listings) is str:
             try:
                 if path.endswith(".txt"):   # Checks if this is a .txt document
                     text_document = open(path, "r", encoding="utf-8")
@@ -27,6 +36,7 @@ class Autoarticle:
                     text_document.close()
             except:
                 print("Error encountered when trying to parse .txt as text, skipping " + path + "...")
+            
 
     def convert_pdf_to_txt(self):
         """Directly from stackoverflow, some edits.
@@ -42,7 +52,28 @@ class Autoarticle:
         caching = True
         pagenos = set()
 
-        for path in self.listings:
+        if type(self.listings) is list:
+            for path in self.listings:
+                try:
+                    if path.endswith(".pdf"):      # Cheks if this is a pdf file
+                        fp = open(path, 'rb')
+                        for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
+                                        password=password,
+                                        caching=caching,
+                                        check_extractable=True):
+                            interpreter.process_page(page)
+
+                        text = retstr.getvalue()
+
+                        fp.close()
+                        self.text = self.text + " " + text
+                except:
+                    print("Error encountered when trying to parse PDF as text, skipping " + path + "...")
+    
+            device.close()
+            retstr.close()
+        elif type(self.listings) is str:
+            path = self.listings
             try:
                 if path.endswith(".pdf"):      # Cheks if this is a pdf file
                     fp = open(path, 'rb')
@@ -61,6 +92,7 @@ class Autoarticle:
     
         device.close()
         retstr.close()
+
     
     def create_article(self, length=40):
         """Creates a new article using Markov chains (via markovify) and returns a string

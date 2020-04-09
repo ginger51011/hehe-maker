@@ -22,6 +22,8 @@ To check for updates, run `pip install --upgrade hehe-maker`
 
 ## Running the program
 
+**Update: Since version 1.3.13, HeHE-maker now supports direct paths; All functions can now be called on filepaths**
+
 Simply use `hehemaker -i "<path to input>" -o "<path to output>"` and the script will create print.pdf and web.pdf at the specified path. The path can either be full, like `C:\\User\\...\\example` or relative, or be omitted for HeHE-maker to default to the current directory.
 
 If you are on Windows and this fails, check to see if Python and Python/Scripts are in your PATH-variables (Swe: *Miljövariabler*).
@@ -46,6 +48,8 @@ HeHE-maker can do much more to facilitate the publishing of a paper by using fla
 HeHE-maker is capable of using relative paths to find the directory/folder of your input/output. As default (i.e. no input and/or output is passed), HeHE-maker will set the current directory/folder as both input and/or output. For example, if all pages to a paper is saved in a folder at `~/Documents/HeHE`. If we position ourselves in that directory and run `hehemaker`, we will create `print.pdf` and `web.pdf` in that `~/Documents/HeHE`.
 
 #### Little Timmy
+
+** Little Timmy is a bit off his meds, and has not read the changelog. He can now use direct paths, for example "~./somedir/target.pdf" instead of making folders directly. This can have unforseen consequences (or just boring) consequences together with making a paper, there you should continue to use directories **
 
 Little Timmy has an old printed version of a paper as a PDF file, `old.pdf`, but he wants to censor the article on pages 4-5 and replace it with a two-page ad. He saves `old.pdf` in an otherwise empty directory `~./somedir/` and saves his ad in the (otherwise empty) directory `~./ad/`.
 

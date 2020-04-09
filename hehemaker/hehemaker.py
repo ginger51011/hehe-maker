@@ -34,31 +34,48 @@ def create_page_list(path):
     Goes through each PDF file in the directory and adds every page of every file to the list.
     """
     pages = []
-    page_listings = os.listdir(path)    # A listing is a single PDF file
     pdf_readers = []
 
-    # Creates a PdfReader for each PDF document
-    for listing in page_listings:
+    if os.path.isdir(path):    # We need to check if this is a directory or a file
+        page_listings = os.listdir(path)    # A listing is a single PDF file in the directory
+         # Creates a PdfReader for each PDF document
+        for listing in page_listings:
+            try:
+                if not listing.endswith(".pdf"):    # We skip this listing if it's not an PDF
+                    print("Skipping \"" + listing + "\", not a PDF...")
+                    continue    # We continue the loop without creating PdfReader
+                pdf_readers.append(PdfReader(path + "/" + listing))
+            except Exception as e:  # Wow much error handeling...
+                print("Error: \"" + str(e) + "\" encountered, skipping \"" + listing + "\"...")     # Shitty error handling if we don't have a PDF
+                continue
+                # Goes through the document for each reader and adds all pages from that reader
+        for reader in pdf_readers:
+            n = 0
+            while True:
+                pages.append(reader.getPage(n))
+                try:
+                    reader.getPage(n + 1)   # Real shit programming to check if there is a next page
+                    n = n + 1
+                except:
+                    break
+        return pages
+    elif os.path.isfile(path):   # We have directly linked a PDF file
         try:
-            if not listing.endswith(".pdf"):    # We skip this listing if it's not an PDF
-                print("Skipping \"" + listing + "\", not a PDF...")
-                continue    # We continue the loop without creating PdfReader
-            pdf_readers.append(PdfReader(path + "/" + listing))
+            if not path.endswith(".pdf"):    # We skip this listing if it's not an PDF
+                print("Skipping \"" + path + "\", not a PDF...")
+            reader = PdfReader(path)
         except Exception as e:  # Wow much error handeling...
             print("Error: \"" + str(e) + "\" encountered, skipping \"" + listing + "\"...")     # Shitty error handling if we don't have a PDF
-            continue
-
-    # Goes through the document for each reader and adds all pages from that reader
-    for reader in pdf_readers:
         n = 0
         while True:
             pages.append(reader.getPage(n))
             try:
-                reader.getPage(n + 1)   # Real shit programming to check if there is a next page
+                reader.getPage(n + 1)
                 n = n + 1
-            except:
-                break
-    return pages
+            except: break
+        return pages
+    else:
+        print(str(path) + " could not be resolved as a path to file or directory")
 
 def create_print_version(pages_in):
     """Puts together the pages in pages_in to a single PDF in
@@ -179,16 +196,20 @@ def create_article(path, length):
     """ Creates a new article using Markov chains based on the PDF(s) and .txt(s)
     at path, and with length number of sentances
     """
-    pdf_listings = os.listdir(path)    # A listing is a single PDF file
     paths = []
 
-    for listing in pdf_listings:    # We need the full path to the PDF(s)
-        file_path = path + "/" + listing
-        paths.append(file_path)
+    if os.path.isdir(path):     # If we have a directory
+        pdf_listings = os.listdir(path)    # A listing is a single PDF file
 
-    if len(paths) == 0:
-        print("Cannot create article from empty directory")
-        return
+        for listing in pdf_listings:    # We need the full path to the PDF(s)
+            file_path = path + "/" + listing
+            paths.append(file_path)
+
+        if len(paths) == 0:
+            print("Cannot create article from empty directory")
+            return
+    elif os.path.isfile(path):
+        paths = path
 
     aa = Autoarticle(paths)     # Creates a new Autoarticle object
 
