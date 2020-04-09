@@ -7,7 +7,7 @@ from pdfminer.pdfpage import PDFPage
 import markovify
 
 class Autoarticle:
-    """Class to generate a text from PDF(s) and .txt-documents in a directory 
+    """Class to generate a text from PDF(s) and .txt-documents in a directory/file 
     with path(s) in listings based on Markov chains
     """
 
@@ -17,7 +17,7 @@ class Autoarticle:
 
     def extract_text_from_txt(self):
         """Extracts text from an .txt document, if one
-        is found in directory
+        is found in directory/file
         """
         if type(self.listings) is list:
             for path in self.listings:
