@@ -93,8 +93,8 @@ def create_print_version(pages_in):
     if args.force:
         pages_out += pages_in
     
-    # Where it should be -> which pages are added -> write
-    PdfWriter(args.output + "/" + "print.pdf").addpages(pages_out).write()
+    write_pdf(pages_out, "print.pdf")
+
 # Sök Diod
 def create_web_version(pages_in):
     """Puts together the pages in pages_in to a single PDF in
@@ -106,8 +106,8 @@ def create_web_version(pages_in):
     # We put in the pages one after the other
     while len(pages_in) > 0:
         pages_out.append(pages_in.pop(0))
-        
-    PdfWriter(args.output + "/" + "web.pdf").addpages(pages_out).write()
+
+    write_pdf(pages_out, "web.pdf")
 
 def print_to_web(pages_in):
     """Converts the pages in pages_in from print format to web format and
@@ -131,8 +131,7 @@ def print_to_web(pages_in):
         pages_out_sorted2.insert(0, pages_out.pop(0))
 
     pages_out_sorted1.extend(pages_out_sorted2)     # The content of the second list is added to the first
-
-    PdfWriter(args.output + "/split.pdf").addpages(pages_out_sorted1).write()
+    write_pdf(pages_out_sorted1, "split.pdf")
 
 def fixpage(*pages):
     """ Taken from example project in pdfrw.
@@ -165,7 +164,7 @@ def remove_pages(pages_in, page_numbers):
         else:
             del pages_out[index] 
             i-=-1
-    PdfWriter(args.output + "/removed.pdf").addpages(pages_out).write()
+    write_pdf(pages_out, "removed.pdf")
 
 def insert_pages(pages_in, pages_to_be_inserted, index):
     """ Inserts pages at specified index
@@ -176,12 +175,16 @@ def insert_pages(pages_in, pages_to_be_inserted, index):
 
     while len(pages_to_be_inserted) > 0:
         pages_out.insert(true_index, pages_to_be_inserted.pop(0))
-    PdfWriter(args.output + "/inserted.pdf").addpages(pages_out).write()
+    write_pdf(pages_out, "inserted.pdf")
 
 def get_pages(pages_in, page_numbers):
     """ Creates a separate PDF file for each
     page as listed in page_numbers
     """
+    if os.path.isfile(os.output):
+        print("When using --get, output must be a directory. Exiting...")
+        return
+
     for nbr in page_numbers:
         nbr = nbr - 1       # pages_in starts indexing at 0, user at 1
         if (nbr < 0) or (nbr > len(pages_in) - 1):
@@ -240,7 +243,18 @@ def create_article(path, length):
 
     del aa  # Remove the damn object
 
+def write_pdf(pages, default_name):
+    """Writes pdf from pages, either to default name or to a specific path if one is defined
+    in args.output
+    """
 
+    if os.path.isdir(args.output):
+        # Where it should be -> which pages are added -> write
+        PdfWriter(args.output + "/" + default_name).addpages(pages).write()
+    elif os.path.isfile(args.output):
+        if not args.output.endswith(".pdf"):    # File must be a PDF
+            args.output = args.output + ".pdf"
+        PdfWriter(args.output).addpages(pages).write()
 
 # End of defining functions
 
