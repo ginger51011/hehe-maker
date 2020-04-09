@@ -146,7 +146,7 @@ def remove_pages(pages_in, page_numbers):
             print("Page " + str(n) + " could not be removed, skipping...")
             break
         else:
-            del pages_out[n - (1 + i)] 
+            del pages_out[index] 
             i-=-1
     PdfWriter(args.output + "/removed.pdf").addpages(pages_out).write()
 
