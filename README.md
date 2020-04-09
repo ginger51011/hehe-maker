@@ -2,7 +2,7 @@
 
 *For an (outdated) guide in Swedish, as created for Redaktionen at E-sektionen, see `README.swe.md`*
 
-*__HeHE-maker is now capable of writing its' own articles! Check out the -aa flag for more information__*
+__HeHE-maker is now capable of writing its' own articles! Check out the -aa flag for more information__
 
 **HeHE-maker** is a simple command line-tool to create a paper to be published in printed and/or web form. Simply create the pages you want, order them in an otherwise empty directory/folder (simply naming them 01.pdf, 02.pdf, 03.pdf etc. is enough) and let the script create printable versions, as well as web versions, for you! If more than one page happens to be in the same PDF-file, for example if an article has two pages in the same file, HeHE-maker will take care of this for you.
 
@@ -49,7 +49,7 @@ HeHE-maker is capable of using relative paths to find the directory/folder of yo
 
 #### Little Timmy
 
-** Little Timmy is a bit off his meds, and has not read the changelog. He can now use direct paths, for example "~./somedir/target.pdf" instead of making folders directly. This can have unforseen consequences (or just boring) consequences together with making a paper, there you should continue to use directories **
+**Little Timmy is a bit off his meds, and has not read the changelog. He can now use direct paths, for example "~./somedir/target.pdf" instead of making folders directly. This can have unforseen (or just boring) consequences together with making a paper, there you should continue to use directories**
 
 Little Timmy has an old printed version of a paper as a PDF file, `old.pdf`, but he wants to censor the article on pages 4-5 and replace it with a two-page ad. He saves `old.pdf` in an otherwise empty directory `~./somedir/` and saves his ad in the (otherwise empty) directory `~./ad/`.
 
