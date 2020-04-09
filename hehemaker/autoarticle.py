@@ -29,6 +29,7 @@ class Autoarticle:
                 except:
                     print("Error encountered when trying to parse .txt as text, skipping " + path + "...")
         elif type(self.listings) is str:
+            path = self.listings
             try:
                 if path.endswith(".txt"):   # Checks if this is a .txt document
                     text_document = open(path, "r", encoding="utf-8")
