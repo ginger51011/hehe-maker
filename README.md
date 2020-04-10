@@ -33,7 +33,7 @@ If you are on Windows and this fails, check to see if Python and Python/Scripts 
 HeHE-maker can do much more to facilitate the publishing of a paper by using flags to set functions. These are written before the input and output paths. They are as follows:
 
 * This list not helpful enough? Use `-h` or `--help`!
-* To specify input and output path, use `-i` and `-o` (or `--input` and `--output` respectively). For example, running `hehemaker -o "C:\\Users\\<some user>\\Desktop"` will assemble the pages in the current directory and output them to the desktop. These can be direct file paths, such as `~/somedir/example.pdf`, but will not work when using the `--autoarticle` or `--get` options.
+* To specify input and output path, use `-i` and `-o` (or `--input` and `--output` respectively). For example, running `hehemaker -o "C:\\Users\\<some user>\\Desktop"` will assemble the pages in the current directory and output them to the desktop. These can be direct file paths, such as `~/somedir/example.pdf`, but will not work when using the `--autoarticle` or `--get` options or when using in normal mode (i.e. to create web and print-versions).
 * To suppress the requirement for the number of pages to fit nicely on the print format, use `-f` or `--force`. (This is only necessary when running in normal mode, i.e. not using other flags)
 * To get only specific pages of PDF(s) in a directory, use `-g` or `--get` and specify which pages you want.
 * To convert from a printed version to a web version, use `-s` or `--split`.

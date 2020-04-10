@@ -286,6 +286,9 @@ def main():
     elif args.autoarticle:
         create_article(args.input, args.autoarticle)
     else:
+        if not os.path.isdir(args.output):
+            print("When using HeHE-maker in normal mode, --output must be a directory. Exiting...")
+            exit()
         create_print_version(pages_in)
         create_web_version(pages_in)
 
