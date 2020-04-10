@@ -13,7 +13,7 @@ parser.add_argument("-x", "--index", help="Page number at which pages should be 
 parser.add_argument("-rm", "--remove", nargs="+", type=int, help="Removes the pages given from the PDF specified")      # Flag to remove pages
 parser.add_argument("-g", "--get", nargs="+", type=int, help="Outputs the pages given from the PDF specified")      # Flag to get pages
 parser.add_argument("-i", "--input", default="./", help="Path to pages, defaults to current directory. Can be a direct path to a file")      # Our input and output is the current directory by default
-parser.add_argument("-o", "--output", default="./", help="Path to where you want the papers saved, defaults to current directory")
+parser.add_argument("-o", "--output", default="./", help="Path to where you want the papers saved, defaults to current directory. Can be a direct path to a file")
 parser.add_argument("-aa", "--autoarticle", nargs="?", const="40", help="Creates a new article in .txt format at the output based on the PDF(s) and .txt-documents in the input of this length (sentances). Defaults to 40. Will save extracted text from PDF(s) as a .txt file in output directory")    # Const är vad det får om man ej anger det
 
 args = parser.parse_args()      # Collects our input in args
