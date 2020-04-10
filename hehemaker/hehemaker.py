@@ -181,9 +181,9 @@ def get_pages(pages_in, page_numbers):
     """ Creates a separate PDF file for each
     page as listed in page_numbers
     """
-    if os.path.isfile(os.output):
+    if not os.path.isdir(args.output):
         print("When using --get, output must be a directory. Exiting...")
-        return
+        exit()
 
     for nbr in page_numbers:
         nbr = nbr - 1       # pages_in starts indexing at 0, user at 1
@@ -199,6 +199,10 @@ def create_article(path, length):
     """ Creates a new article using Markov chains based on the PDF(s) and .txt(s)
     at path, and with length number of sentances
     """
+    if not os.path.isdir(args.output):
+        print("When using --autoarticle, --output must be a directory. Exiting...")
+        exit()
+
     paths = []
 
     if os.path.isdir(path):     # If we have a directory
@@ -247,11 +251,10 @@ def write_pdf(pages, default_name):
     """Writes pdf from pages, either to default name or to a specific path if one is defined
     in args.output
     """
-
     if os.path.isdir(args.output):
         # Where it should be -> which pages are added -> write
         PdfWriter(args.output + "/" + default_name).addpages(pages).write()
-    elif os.path.isfile(args.output):
+    else:
         if not args.output.endswith(".pdf"):    # File must be a PDF
             args.output = args.output + ".pdf"
         PdfWriter(args.output).addpages(pages).write()
