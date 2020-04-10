@@ -2,7 +2,7 @@
 
 *For an (outdated) guide in Swedish, as created for Redaktionen at E-sektionen, see `README.swe.md`*
 
-__HeHE-maker is now capable of writing its' own articles! Check out the -aa flag for more information__
+**HeHE-maker is now capable of writing its' own articles! Check out the -aa flag for more information**
 
 **HeHE-maker** is a simple command line-tool to create a paper to be published in printed and/or web form. Simply create the pages you want, order them in an otherwise empty directory/folder (simply naming them 01.pdf, 02.pdf, 03.pdf etc. is enough) and let the script create printable versions, as well as web versions, for you! If more than one page happens to be in the same PDF-file, for example if an article has two pages in the same file, HeHE-maker will take care of this for you.
 
@@ -12,7 +12,7 @@ This program is part if the Python Package Index (PyPi) and can easily be instal
 
 * `pip install hehe-maker`
 
-__Alternatively__
+**Alternatively**
 
 * `pip3 install hehe-maker`
 
@@ -33,7 +33,7 @@ If you are on Windows and this fails, check to see if Python and Python/Scripts 
 HeHE-maker can do much more to facilitate the publishing of a paper by using flags to set functions. These are written before the input and output paths. They are as follows:
 
 * This list not helpful enough? Use `-h` or `--help`!
-* To specify input and output path, use `-i` and `-o` (or `--input` and `--output` respectively). For example, running `hehemaker -o "C:\\Users\\<some user>\\Desktop"` will assemble the pages in the current directory and output them to the desktop. These can be direct file paths, such as `~/somedir/example.pdf`, but will not work when using the `-autoarticle` or `--get` options.
+* To specify input and output path, use `-i` and `-o` (or `--input` and `--output` respectively). For example, running `hehemaker -o "C:\\Users\\<some user>\\Desktop"` will assemble the pages in the current directory and output them to the desktop. These can be direct file paths, such as `~/somedir/example.pdf`, but will not work when using the `--autoarticle` or `--get` options.
 * To suppress the requirement for the number of pages to fit nicely on the print format, use `-f` or `--force`. (This is only necessary when running in normal mode, i.e. not using other flags)
 * To get only specific pages of PDF(s) in a directory, use `-g` or `--get` and specify which pages you want.
 * To convert from a printed version to a web version, use `-s` or `--split`.
@@ -49,7 +49,7 @@ HeHE-maker is capable of using relative paths to find the directory/folder of yo
 
 #### Little Timmy
 
-**Little Timmy is a bit off his meds, and has not read the changelog. He can now use direct paths, for example "~./somedir/target.pdf" instead of making folders directly. This can have unforseen (or just boring) consequences together with making a paper, there you should continue to use directories**
+**Little Timmy is a bit off his meds, and has not read the changelog. He can now use direct paths, for example `~./somedir/target.pdf` instead of making folders directly. This can have unforseen (or just boring) consequences together with making a paper, there you should continue to use directories**
 
 Little Timmy has an old printed version of a paper as a PDF file, `old.pdf`, but he wants to censor the article on pages 4-5 and replace it with a two-page ad. He saves `old.pdf` in an otherwise empty directory `~./somedir/` and saves his ad in the (otherwise empty) directory `~./ad/`.
 
