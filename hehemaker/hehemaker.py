@@ -8,12 +8,12 @@ from hehemaker.autoarticle import Autoarticle     # The class in our autoarticle
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--force", action="store_true", help="Suppresses the need for the number of pages to be = 0 (mod 4)")     # If flag is used saves a true value
 parser.add_argument("-s", "--split", action="store_true", help="Will split pages in two, ordering as if this was a print file")     # Flag for splitting a print version
-parser.add_argument("-ins", "--insert", help="Inserts the pages given at the target directory into the input-paper, pushes the page of that number forward")      # Flag to insert page
+parser.add_argument("-ins", "--insert", type=str, help="Inserts the pages given at the target directory into the input-paper, pushes the page of that number forward")      # Flag to insert page
 parser.add_argument("-x", "--index", help="Page number at which pages should be inserted")     # Where to insert pages
 parser.add_argument("-rm", "--remove", nargs="+", type=int, help="Removes the pages given from the PDF specified")      # Flag to remove pages
 parser.add_argument("-g", "--get", nargs="+", type=int, help="Outputs the pages given from the PDF specified")      # Flag to get pages
-parser.add_argument("-i", "--input", default="./", help="Path to pages, defaults to current directory. Can be a direct path to a file")      # Our input and output is the current directory by default
-parser.add_argument("-o", "--output", default="./", help="Path to where you want the papers saved, defaults to current directory. Can be a direct path to a file")
+parser.add_argument("-i", "--input", default="./", type=str, help="Path to pages, defaults to current directory. Can be a direct path to a file")      # Our input and output is the current directory by default
+parser.add_argument("-o", "--output", default="./", type=str,help="Path to where you want the papers saved, defaults to current directory. Can be a direct path to a file")
 parser.add_argument("-aa", "--autoarticle", nargs="?", const="40", help="Creates a new article in .txt format at the output based on the PDF(s) and .txt-documents in the input of this length (sentances). Defaults to 40. Will save extracted text from PDF(s) as a .txt file in output directory")    # Const är vad det får om man ej anger det
 
 args = parser.parse_args()      # Collects our input in args
