@@ -6,6 +6,7 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 import markovify
 
+
 class Autoarticle:
     """Class to generate a text from PDF(s) and .txt-documents in a directory/file 
     with path(s) in listings based on Markov chains
@@ -19,25 +20,15 @@ class Autoarticle:
         """Extracts text from an .txt document, if one
         is found in directory/file
         """
-        if type(self.listings) is list:
-            for path in self.listings:
-                try:
-                    if path.endswith(".txt"):   # Checks if this is a .txt document
-                        text_document = open(path, "r", encoding="utf-8")
-                        self.text = self.text + " " + text_document.read()
-                        text_document.close()
-                except:
-                    print("Error encountered when trying to parse .txt as text, skipping " + path + "...")
-        elif type(self.listings) is str:
-            path = self.listings
+        for path in list(self.listings):
             try:
                 if path.endswith(".txt"):   # Checks if this is a .txt document
                     text_document = open(path, "r", encoding="utf-8")
                     self.text = self.text + " " + text_document.read()
                     text_document.close()
             except:
-                print("Error encountered when trying to parse .txt as text, skipping " + path + "...")
-            
+                print(
+                    "Error encountered when trying to parse .txt as text, skipping " + path + "...")
 
     def convert_pdf_to_txt(self):
         """Directly from stackoverflow, some edits.
@@ -53,35 +44,14 @@ class Autoarticle:
         caching = True
         pagenos = set()
 
-        if type(self.listings) is list:
-            for path in self.listings:
-                try:
-                    if path.endswith(".pdf"):      # Cheks if this is a pdf file
-                        fp = open(path, 'rb')
-                        for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
-                                        password=password,
-                                        caching=caching,
-                                        check_extractable=True):
-                            interpreter.process_page(page)
-
-                        text = retstr.getvalue()
-
-                        fp.close()
-                        self.text = self.text + " " + text
-                except:
-                    print("Error encountered when trying to parse PDF as text, skipping " + path + "...")
-    
-            device.close()
-            retstr.close()
-        elif type(self.listings) is str:
-            path = self.listings
+        for path in list(self.listings):
             try:
                 if path.endswith(".pdf"):      # Cheks if this is a pdf file
                     fp = open(path, 'rb')
                     for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
-                                        password=password,
-                                        caching=caching,
-                                        check_extractable=True):
+                                                  password=password,
+                                                  caching=caching,
+                                                  check_extractable=True):
                         interpreter.process_page(page)
 
                     text = retstr.getvalue()
@@ -89,19 +59,19 @@ class Autoarticle:
                     fp.close()
                     self.text = self.text + " " + text
             except:
-                print("Error encountered when trying to parse PDF as text, skipping " + path + "...")
-    
+                print(
+                    "Error encountered when trying to parse PDF as text, skipping " + path + "...")
+
         device.close()
         retstr.close()
 
-    
     def create_article(self, length=40):
         """Creates a new article using Markov chains (via markovify) and returns a string
         of the new article with length amount of sentances (defaults to 40)
         """
         article = ""
         text_model = markovify.Text(self.text)
-        
+
         for i in range(0, length):
             try:
                 article = article + " " + text_model.make_sentence()
@@ -109,4 +79,3 @@ class Autoarticle:
                 pass
 
         return article
-        
