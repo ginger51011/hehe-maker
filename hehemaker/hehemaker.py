@@ -274,8 +274,11 @@ def create_article(path, length):
         text_document.close()
 
     print("Creating new article...")
-    new_article_text = aa.create_article(
-        int(length))   # length should be parsed as int
+    try:
+        new_article_text = aa.create_article(int(length))   # length should be parsed as int
+    except ValueError as e:     # For example, we have no text
+        print("Error encountered: " + str(e) + "\n Exiting...")
+        exit()
 
     # Creates the txt file with the new article
     new_article_file = open(

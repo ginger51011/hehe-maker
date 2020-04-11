@@ -70,6 +70,10 @@ class Autoarticle:
         of the new article with length amount of sentances (defaults to 40)
         """
         article = ""
+        
+        if len(self.text) is 0:
+            raise ValueError("No text was found")
+
         text_model = markovify.Text(self.text)
 
         for i in range(0, length):
