@@ -186,7 +186,7 @@ def remove_pages(pages_in, page_numbers):
         # Our list index start at 0, but the user starts counting pages at 1. We also want to account for already removed pages
         index = n - (1 + i)
         if index > len(pages_out):      # We can no longer remove pages
-            print("Page " + str(n) + " could not be removed, skipping...")
+            print("Pages >" + str(n) + " could not be removed, skipping...")
             break
         else:
             del pages_out[index]
