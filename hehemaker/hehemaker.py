@@ -232,7 +232,8 @@ def create_article(path, length):
     at path, and with length number of sentances
     """
     if not os.path.isdir(args.output):
-        raise NotADirectoryError("When using --autoarticle, --output must be a directory")
+        raise NotADirectoryError(
+            "When using --autoarticle, --output must be a directory")
 
     paths = []
 
@@ -274,7 +275,8 @@ def create_article(path, length):
 
     print("Creating new article...")
     try:
-        new_article_text = aa.create_article(int(length))   # length should be parsed as int
+        new_article_text = aa.create_article(
+            int(length))   # length should be parsed as int
     except ValueError as e:     # For example, we have no text
         print("Error encountered: " + str(e) + "\n Exiting...")
         exit()
