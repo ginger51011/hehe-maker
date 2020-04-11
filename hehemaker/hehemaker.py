@@ -36,7 +36,7 @@ args = parser.parse_args()      # Collects our input in args
 
 
 def pagecount_is_legal(pages_in):
-    """Throws an exception if we don't force mod 4 != 0
+    """Throws an ValueError exception if we don't force mod 4 != 0
     of the pages, or we use another flag that ignores this.
     """
     if not (args.force or args.split or args.insert or args.index or args.remove or args.get or args.autoarticle):   # Kontrollerar att vi inte försöker förbigå saker
@@ -232,8 +232,7 @@ def create_article(path, length):
     at path, and with length number of sentances
     """
     if not os.path.isdir(args.output):
-        print("When using --autoarticle, --output must be a directory. Exiting...")
-        exit()
+        raise NotADirectoryError("When using --autoarticle, --output must be a directory")
 
     paths = []
 
@@ -308,16 +307,22 @@ def write_pdf(pages, default_name):
 def main():
     # Throws exception if we want to insert a page but have not specified an index
     if (args.insert and not args.index) or (not args.insert and args.index):
-        raise EnvironmentError(
+        e = EnvironmentError(
             "You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -x")
+        print("Error encountered: " + str(e) + "\n Exiting...")
+        exit()
 
     pages_in = []
     if not args.autoarticle:
         # Creates list of all pages that we take as input
         pages_in = create_page_list(args.input)
 
-    # Checks to see if we have a legal number of pages, or force past it
-    pagecount_is_legal(pages_in)
+    try:
+        # Checks to see if we have a legal number of pages, or force past it
+        pagecount_is_legal(pages_in)
+    except ValueError as e:
+        print("Error encountered: " + str(e) + "\n Exiting...")
+        exit()
 
     if args.split:
         print_to_web(pages_in)
@@ -329,7 +334,11 @@ def main():
     elif args.get:
         get_pages(pages_in, args.get)
     elif args.autoarticle:
-        create_article(args.input, args.autoarticle)
+        try:
+            create_article(args.input, args.autoarticle)
+        except NotADirectoryError as e:
+            print("Error encountered: " + str(e) + "\n Exiting...")
+            exit()
     else:
         if not os.path.isdir(args.output):
             print(
