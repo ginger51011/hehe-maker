@@ -9,12 +9,12 @@ from hehemaker.autoarticle import Autoarticle
 parser = argparse.ArgumentParser()
 # If flag is used saves a true value
 parser.add_argument("-f", "--force", action="store_true",
-                    help="Suppresses the need for the number of pages to be = 0 (mod 4)")
+                    help="Suppresses the need for the number of pages to be == 0 (mod 4)")
 # Flag for splitting a print version
 parser.add_argument("-s", "--split", action="store_true",
                     help="Will split pages in two, ordering as if this was a print file")
 parser.add_argument("-ins", "--insert", type=str,
-                    help="Inserts the pages given at the target directory into the input-paper, pushes the page of that number forward")      # Flag to insert page
+                    help="Inserts the pages given at the target directory/file into the input-paper, pushes the page of that number forward")      # Flag to insert page
 # Where to insert pages
 parser.add_argument("-x", "--index", type=int,
                     help="Page number at which pages should be inserted")
