@@ -57,8 +57,7 @@ def create_page_list(path):
     try:
         is_directory = os.path.isdir(path)
     except:
-        print(path + " could not be resolved as a file or directory. Exiting...")
-        exit()
+        exit(path + " could not be resolved as a file or directory. Exiting...")
 
     if is_directory:
         page_listings = os.listdir(path)
@@ -66,7 +65,7 @@ def create_page_list(path):
         page_listings.append(path)
         print(page_listings[0])
 
-    # We don't want to iterate over a string, reates a PdfReader for each PDF document
+    # We don't want to iterate over a string, creates a PdfReader for each PDF document
     for listing in list(page_listings):
         try:
             # We skip this listing if it's not an PDF
@@ -211,8 +210,7 @@ def get_pages(pages_in, page_numbers):
     page as listed in page_numbers
     """
     if not os.path.isdir(args.output):
-        print("When using --get, output must be a directory. Exiting...")
-        exit()
+        exit("When using --get, output must be a directory. Exiting...")
 
     for nbr in page_numbers:
         nbr = nbr - 1       # pages_in starts indexing at 0, user at 1
@@ -278,8 +276,7 @@ def create_article(path, length):
         new_article_text = aa.create_article(
             int(length))   # length should be parsed as int
     except ValueError as e:     # For example, we have no text
-        print("Error encountered: " + str(e) + "\n Exiting...")
-        exit()
+        exit("Error encountered: " + str(e) + "\n Exiting...")
 
     # Creates the txt file with the new article
     new_article_file = open(
@@ -311,8 +308,7 @@ def main():
     if (args.insert and not args.index) or (not args.insert and args.index):
         e = EnvironmentError(
             "You must specify both path to pages to be inserted and index of where they should be inserted; Use both -ins and -x")
-        print("Error encountered: " + str(e) + "\n Exiting...")
-        exit()
+        exit("Error encountered: " + str(e) + "\n Exiting...")
 
     pages_in = []
     if not args.autoarticle:
@@ -323,8 +319,7 @@ def main():
         # Checks to see if we have a legal number of pages, or force past it
         pagecount_is_legal(pages_in)
     except ValueError as e:
-        print("Error encountered: " + str(e) + "\n Exiting...")
-        exit()
+        exit("Error encountered: " + str(e) + "\n Exiting...")
 
     if args.split:
         print_to_web(pages_in)
@@ -339,13 +334,10 @@ def main():
         try:
             create_article(args.input, args.autoarticle)
         except NotADirectoryError as e:
-            print("Error encountered: " + str(e) + "\n Exiting...")
-            exit()
+            exit("Error encountered: " + str(e) + "\n Exiting...")
     else:
         if not os.path.isdir(args.output):
-            print(
-                "When using HeHE-maker in normal mode, --output must be a directory. Exiting...")
-            exit()
+            exit("When using HeHE-maker in normal mode, --output must be a directory. Exiting...")
         create_print_version(pages_in)
         create_web_version(pages_in)
 

@@ -67,7 +67,8 @@ class Autoarticle:
 
     def create_article(self, length=40):
         """Creates a new article using Markov chains (via markovify) and returns a string
-        of the new article with length amount of sentances (defaults to 40)
+        of the new article with length amount of sentances (defaults to 40). Raises ValueError if no
+        text is found.
         """
         article = ""
         
