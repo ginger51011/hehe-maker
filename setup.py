@@ -21,8 +21,8 @@ setup(
     },
     python_requires=">3.0.0",
     install_requires=[      # So that pip also installs required packages
-          "pdfrw",
-          "pdfminer",
-          "markovify",
-      ],
+        "pdfrw",
+        "pdfminer",
+        "markovify",
+    ],
 )

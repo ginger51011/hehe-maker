@@ -71,7 +71,7 @@ class Autoarticle:
         text is found.
         """
         article = ""
-        
+
         if len(self.text) is 0:
             raise ValueError("No text was found")
 

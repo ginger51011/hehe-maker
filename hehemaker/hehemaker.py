@@ -63,7 +63,6 @@ def create_page_list(path):
         page_listings = os.listdir(path)
     elif not is_directory:
         page_listings.append(path)
-        print(page_listings[0])
 
     # We don't want to iterate over a string, creates a PdfReader for each PDF document
     for listing in list(page_listings):
@@ -337,7 +336,8 @@ def main():
             exit("Error encountered: " + str(e) + "\n Exiting...")
     else:
         if not os.path.isdir(args.output):
-            exit("When using HeHE-maker in normal mode, --output must be a directory. Exiting...")
+            exit(
+                "When using HeHE-maker in normal mode, --output must be a directory. Exiting...")
         create_print_version(pages_in)
         create_web_version(pages_in)
 
