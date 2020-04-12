@@ -27,7 +27,7 @@ parser.add_argument("-i", "--input", default="./", type=str,
                     help="Path to pages, defaults to current directory. Can be a direct path to a file")
 parser.add_argument("-o", "--output", default="./", type=str,
                     help="Path to where you want the papers saved, defaults to current directory. Can be a direct path to a file")
-parser.add_argument("-aa", "--autoarticle", nargs="?", const="40",
+parser.add_argument("-aa", "--autoarticle", nargs="?", type=int, const="40",
                     help="Creates a new article in .txt format at the output based on the PDF(s) and .txt-documents in the input of this length (sentances). Defaults to 40. Will save extracted text from PDF(s) as a .txt file in output directory")    # Const är vad det får om man ej anger det
 
 args = parser.parse_args()      # Collects our input in args
