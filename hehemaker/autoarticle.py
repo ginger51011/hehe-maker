@@ -10,6 +10,13 @@ import markovify
 class Autoarticle:
     """Class to generate a text from PDF(s) and .txt-documents in a directory/file 
     with path(s) in listings based on Markov chains
+
+    Attributes
+    ----------
+    listings
+        All paths to files which can be used to generate a new article
+    text : str
+        All text extracted that can be used to generate a new article
     """
 
     def __init__(self, listings):   # Comparable to a constructor in Java, self refers to the object
@@ -65,10 +72,23 @@ class Autoarticle:
         device.close()
         retstr.close()
 
-    def create_article(self, length=40):
-        """Creates a new article using Markov chains (via markovify) and returns a string
-        of the new article with length amount of sentances (defaults to 40). Raises ValueError if no
-        text is found.
+    def create_article(self, length=40) -> str:
+        """Creates a new article using Markov chains.
+
+        Parameters
+        ----------
+        length : int
+            Describes how many sentaces should be generated for the new article
+
+        Returns
+        -------
+        str
+            String of the generated article
+        
+        Raises
+        -------
+        ValueError 
+            If no text is found.
         """
         article = ""
 

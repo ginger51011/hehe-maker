@@ -35,9 +35,15 @@ args = parser.parse_args()      # Collects our input in args
 # Defining functions
 
 
-def pagecount_is_legal(pages_in):
+def pagecount_is_legal(pages_in: list) -> bool:
     """Throws an ValueError exception if we don't force mod 4 != 0
     of the pages, or we use another flag that ignores this.
+
+    Returns
+    ------
+    bool
+        If the number of pages are legal,
+        considering the flags being used
     """
     if not (args.force or args.split or args.insert or args.index or args.remove or args.get or args.autoarticle):   # Kontrollerar att vi inte försöker förbigå saker
         nbr_of_pages = len(pages_in)
@@ -46,9 +52,20 @@ def pagecount_is_legal(pages_in):
                 "Number of pages does not give mod 4 == 0; Then you can't create a (nice) paper version. Use -f to force past this.")
 
 
-def create_page_list(path):
+def create_page_list(path: str) -> list:
     """Returns a list of pages in the directory with path path. 
     Goes through each PDF file in the directory and adds every page of every file to the list.
+
+    Parameters
+    ----------
+    path : str
+        Path to file or directory of PDFs to be
+        extracted as pages
+
+    Returns
+    -------
+    list
+        A list of Page objects
     """
     pages = []
     pdf_readers = []
@@ -173,7 +190,7 @@ def splitpage(page):
         yield PageMerge().add(page, viewrect=(x, 0, 0.5, 1)).render()
 
 
-def remove_pages(pages_in, page_numbers):
+def remove_pages(pages_in: list, page_numbers: list):
     """ Removes the pages with page_numbers from pages_in
     and creates PDF with result
     """
@@ -192,7 +209,7 @@ def remove_pages(pages_in, page_numbers):
     write_pdf(pages_out, "removed.pdf")
 
 
-def insert_pages(pages_in, pages_to_be_inserted, index):
+def insert_pages(pages_in: list, pages_to_be_inserted: list, index: int):
     """ Inserts pages at specified index
     """
     true_index = index - 1      # Users uses page numbering, we use array index
@@ -204,7 +221,7 @@ def insert_pages(pages_in, pages_to_be_inserted, index):
     write_pdf(pages_out, "inserted.pdf")
 
 
-def get_pages(pages_in, page_numbers):
+def get_pages(pages_in: list, page_numbers: list):
     """ Creates a separate PDF file for each
     page as listed in page_numbers
     """
@@ -224,9 +241,16 @@ def get_pages(pages_in, page_numbers):
                       ".pdf").addpage(pages_in[nbr]).write()
 
 
-def create_article(path, length):
+def create_article(path: str, length: int):
     """ Creates a new article using Markov chains based on the PDF(s) and .txt(s)
     at path, and with length number of sentances
+
+    Parameters
+    ----------
+    path : str
+        Path to file or directory to be basis for new article
+    length : int
+        Number of sentances of the generated article
     """
     if not os.path.isdir(args.output):
         raise NotADirectoryError(
@@ -286,9 +310,17 @@ def create_article(path, length):
     del aa  # Remove the damn object
 
 
-def write_pdf(pages, default_name):
+def write_pdf(pages: list, default_name: str):
     """Writes pdf from pages, either to default name or to a specific path if one is defined
     in args.output
+
+    Parameters
+    ----------
+    pages : list
+        A list of Page objects
+    default_name : str
+        What the default name for this type of PDF should be,
+        if args.output is not given
     """
     if os.path.isdir(args.output):
         # Where it should be -> which pages are added -> write
