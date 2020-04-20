@@ -24,13 +24,13 @@ To check for updates, run `pip install --upgrade hehe-maker`
 
 **Update: Since version 1.3.13, HeHE-maker now supports direct paths; All functions can now be called on filepaths**
 
-Simply use `hehemaker -i "<path to input>" -o "<path to output>"` and the script will create print.pdf and web.pdf at the specified path. The path can either be full, like `C:\\User\\...\\example` or relative, or be omitted for HeHE-maker to default to the current directory.
+Simply use `hehemaker -i "<path to input>" -o "<path to output>"` and the script will create print.pdf and web.pdf at the specified path. The path can either be full, like `C:\\User\\...\\example` or relative, or be omitted for HeHE-maker to default to the current directory. Omitting `-i`and/or `-o` will make them default to the current directory.
 
 If you are on Windows and this fails, check to see if Python and Python/Scripts are in your PATH-variables (Swe: *Miljövariabler*).
 
 ## Further functions and flags
 
-HeHE-maker can do much more to facilitate the publishing of a paper by using flags to set functions. These are written before the input and output paths. They are as follows:
+HeHE-maker can do much more to facilitate the publishing of a paper by using flags to set functions. They are as follows:
 
 * This list not helpful enough? Use `-h` or `--help`!
 * To specify input and output path, use `-i` and `-o` (or `--input` and `--output` respectively). For example, running `hehemaker -o "C:\\Users\\<some user>\\Desktop"` (note that quotes are optional) will assemble the pages in the current directory and output them to the desktop. These can be direct file paths, such as `~/somedir/example.pdf`, but this will not work when using the `--autoarticle` or `--get` options or when using in normal mode (i.e. to create web and print-versions).
