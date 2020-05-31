@@ -24,9 +24,9 @@ To check for updates, run `pip install --upgrade hehe-maker`
 
 **Update: Since version 1.3.13, HeHE-maker now supports direct paths; All functions can now be called on filepaths**
 
-Simply use `hehemaker -i "<path to input>" -o "<path to output>"` and the script will create print.pdf and web.pdf at the specified path. The path can either be full, like `C:\\User\\...\\example` or relative, or be omitted for HeHE-maker to default to the current directory. Omitting `-i`and/or `-o` will make them default to the current directory.
+Simply use `hehemaker -i <path to input> -o <path to output>` (without `<>`) and the script will create print.pdf and web.pdf at the specified path. The path can either be full, like `C:\\User\\...\\example` or relative, or be omitted for HeHE-maker to default to the current directory. Omitting `-i`and/or `-o` will make them default to the current directory.
 
-If you are on Windows and this fails, check to see if Python and Python/Scripts are in your PATH-variables (Swe: *Miljövariabler*).
+If you are on Windows and this fails, check to see if Python and Python/Scripts are in your PATH-variables (Swe: *Miljövariabler*). Some Linux requires that pip installs to a directory in the PATH variable.
 
 ## Further functions and flags
 
@@ -46,6 +46,18 @@ HeHE-maker can do much more to facilitate the publishing of a paper by using fla
 #### Using relative paths (Recommended)
 
 HeHE-maker is capable of using relative paths to find the directory/folder of your input/output. As default (i.e. no input and/or output is passed), HeHE-maker will set the current directory/folder as both input and/or output. For example, if all pages to a paper is saved in a folder at `~/Documents/HeHE`. If we position ourselves in that directory and run `hehemaker`, we will create `print.pdf` and `web.pdf` in that `~/Documents/HeHE`.
+
+#### Little Casper
+
+Little Casper is in charge of creating an informational pamphlet for a major event which may or may not be cancelled by a minor apocalypse. His minions are creating PDF pages with pretty designs in landscape mode, and now Little Casper wants to put these together in a printable format.
+
+He starts by updating to the latest stable release of `hehe-maker` by running `pip3 install --upgrade hehe-maker`. He runs `hehemaker -h` to get helpful information.
+
+He saves all pages in `~/somedir`. He first needs to split the landscape (A3) pages, as he wants to sort them. He runs `hehemaker -s -i ~/somedir/<somename>.pdf -o ~/somedir/<someothername>` to split each A3-page into two and save them in `~/somedir` with the name `<someothername>.pdf`. Since Little Casper is very smart and has a very good brain, he names them in a smart way. For example, the landscape page containing page 1 and 2 of the pamphlet is named `01.pdf`.
+
+At some point, the pages being split might not be directly after eachother, for example the front page and the last page might be in the same file `~/somedir/frontandlast.pdf` despite being page 1 and 12. No problem! By running `hehemaker -g 1 -o ~/somedir/frontpage.pdf` Little Casper can save the frontpage as a pdf of its' own, and do the same thing to the last page.
+
+After having done this, Little Casper moves all pages now neatly sorted to their own directory `~/pamphlet/`. All pages are listed in order in the directory, which he does by naming them by the first page in each pdf-file (i.e. `01.pdf`, `02.pdf`, ..., `XX.pdf`). By running `hehemaker -i ~/pamphlet -o ~/Documents`, he can now find a finished pamphlet in both web and printable format in his Documents-folder as `web.pdf` and `print.pdf`.
 
 #### Little Timmy
 
