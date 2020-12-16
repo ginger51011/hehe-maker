@@ -24,5 +24,6 @@ setup(
         "pdfrw",
         "pdfminer",
         "markovify",
+        "rich"
     ],
 )

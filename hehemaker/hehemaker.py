@@ -4,6 +4,8 @@ import os
 import argparse
 # The class in our autoarticle.py file
 from hehemaker.autoarticle import Autoarticle
+from rich.progress import Progress, TextColumn, BarColumn
+
 
 # Parser so we can control everything from the command line (smaht)
 parser = argparse.ArgumentParser()
@@ -31,6 +33,15 @@ parser.add_argument("-aa", "--autoarticle", nargs="?", type=int, const="40",
                     help="Creates a new article in .txt format at the output based on the PDF(s) and .txt-documents in the input of this length (sentances). Defaults to 40. Will save extracted text from PDF(s) as a .txt file in output directory")    # Const är vad det får om man ej anger det
 
 args = parser.parse_args()      # Collects our input in args
+
+# Creating nice CLI aestethics
+progress = Progress(
+    TextColumn("{task.fields[title]}", justify="right"),  # taskname is chosen by us
+    BarColumn(bar_width=None),
+    "[progress.percentage]{task.percentage:>3.1f}%",
+    "•",
+    transient=True  # Is hidden after completion
+)
 
 # Defining functions
 
@@ -81,23 +92,29 @@ def create_page_list(path: str) -> list:
     elif not is_directory:
         page_listings.append(path)
 
+    task = progress.add_task("parsing listings", title="[bold green]Looking for PDFs...", total=len(list(page_listings)))
     # We don't want to iterate over a string, creates a PdfReader for each PDF document
     for listing in list(page_listings):
         try:
             # We skip this listing if it's not an PDF
             if not listing.endswith(".pdf"):
                 print("Skipping \"" + listing + "\", not a PDF...")
+                progress.update(task, advance=1)
                 continue    # We continue the loop without creating PdfReader
             if is_directory:
                 pdf_readers.append(PdfReader(path + "/" + listing))
             else:
                 pdf_readers.append(PdfReader(path))
+            progress.update(task, advance=1)
         except Exception as e:  # Wow much error handeling...
             # Shitty error handling if we don't have a PDF
             print("Error: \"" + str(e) +
-                  "\" encountered, skipping \"" + listing + "\"...")
+                "\" encountered, skipping \"" + listing + "\"...")
+            progress.update(task, advance=1)
             continue
-            # Goes through the document for each reader and adds all pages from that reader
+                # Goes through the document for each reader and adds all pages from that reader
+    
+    pages_task = progress.add_task("assemble pages", title="[bold green]Assembling pages...", total=len(list(pdf_readers)))
     for reader in list(pdf_readers):
         n = 0
         while True:
@@ -108,6 +125,7 @@ def create_page_list(path: str) -> list:
                 n = n + 1
             except:
                 break
+        progress.update(pages_task, advance=1)
     return pages
 
 
@@ -216,8 +234,11 @@ def insert_pages(pages_in: list, pages_to_be_inserted: list, index: int):
     pages_out = pages_in.copy()
     pages_to_be_inserted.reverse()      # We are going to insert them in reverse order
 
-    while len(pages_to_be_inserted) > 0:
-        pages_out.insert(true_index, pages_to_be_inserted.pop(0))
+    with progress:
+        task = progress.add_task("pageinsert", title="[bold green]Inserting pages...", total=len(pages_to_be_inserted))
+        while len(pages_to_be_inserted) > 0:
+            pages_out.insert(true_index, pages_to_be_inserted.pop(0))
+            progress.update(task, advance=1)
     write_pdf(pages_out, "inserted.pdf")
 
 

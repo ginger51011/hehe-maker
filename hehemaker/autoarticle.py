@@ -5,7 +5,16 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 import markovify
+from rich.progress import Progress, TextColumn, BarColumn
 
+# Creating nice CLI aestethics
+progress = Progress(
+    TextColumn("{task.fields[title]}", justify="right"),  # taskname is chosen by us
+    BarColumn(bar_width=None),
+    "[progress.percentage]{task.percentage:>3.1f}%",
+    "•",
+    transient=True  # Is hidden after completion
+)
 
 class Autoarticle:
     """Class to generate a text from PDF(s) and .txt-documents in a directory/file 
@@ -51,6 +60,7 @@ class Autoarticle:
         caching = True
         pagenos = set()
 
+        task = progress.add_task("listings", title="[bold blue]Parsing PDFs as txt...", total=len(self.listings))
         for path in list(self.listings):
             try:
                 if path.endswith(".pdf"):      # Cheks if this is a pdf file
@@ -66,9 +76,8 @@ class Autoarticle:
                     fp.close()
                     self.text = self.text + " " + text
             except:
-                print(
-                    "Error encountered when trying to parse PDF as text, skipping " + path + "...")
-
+                print("Error encountered when trying to parse PDF as text, skipping " + path + "...")
+            progress.update(task, advance=1)
         device.close()
         retstr.close()
 
@@ -97,9 +106,11 @@ class Autoarticle:
 
         text_model = markovify.Text(self.text)
 
+        task = progress.add_task("create_article", title="[bold cyan]Generating article...", total=length)
         for i in range(0, length):
             try:
                 article = article + " " + text_model.make_sentence()
+                progress.update(task, advance=1)
             except:
                 pass
 
